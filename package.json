@@ -6,6 +6,7 @@
   "scripts": {
     "build": "vue-tsc -b && vite build",
     "check": "yarn prettier . --check && yarn lint && vue-tsc --noEmit",
+    "deploy": "rsync -av --delete dist/ $DEPLOY_DEST",
     "dev": "vite",
     "format": "yarn prettier --write .",
     "lint": "eslint .",
