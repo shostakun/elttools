@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
-import { getColorList } from "../utils/color";
+import { getColorList } from "@/utils/color";
 import { sample } from "lodash";
 
 const duration = 3;

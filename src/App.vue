@@ -1,15 +1,13 @@
 <template>
-  <main class="main">
-    <RouterView />
-  </main>
+  <v-app>
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
-<style scoped>
-.main {
-  height: 100vh;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100vw;
+<style lang="scss">
+html {
+  overflow-y: auto;
 }
 </style>

@@ -1,20 +1,36 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from "@vue/eslint-config-typescript";
+import eslintConfigPrettier from "eslint-config-prettier";
 import pluginVue from "eslint-plugin-vue";
 
-/** @type {import('eslint').Linter.Config[]} */
-const config = [
-  { files: ["**/*.{js,mjs,cjs,ts,vue}"] },
-  { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...pluginVue.configs["flat/essential"],
+export default defineConfigWithVueTs(
   {
-    files: ["**/*.vue"],
-    languageOptions: { parserOptions: { parser: tseslint.parser } },
+    name: "app/files-to-lint",
+    files: ["**/*.{ts,mts,tsx,vue}"],
   },
-  { ignores: ["dist/*"] },
-];
 
-export default config;
+  {
+    name: "app/files-to-ignore",
+    ignores: ["**/dist/**", "**/dist-ssr/**", "**/coverage/**"],
+  },
+
+  pluginVue.configs["flat/recommended"],
+  vueTsConfigs.recommended,
+
+  {
+    rules: {
+      "@typescript-eslint/no-unused-expressions": [
+        "error",
+        {
+          allowShortCircuit: true,
+          allowTernary: true,
+        },
+      ],
+      "vue/multi-word-component-names": "off",
+    },
+  },
+
+  eslintConfigPrettier,
+);
