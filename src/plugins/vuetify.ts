@@ -1,16 +1,14 @@
-/**
- * plugins/vuetify.ts
- *
- * Framework documentation: https://vuetifyjs.com`
- */
-
-// Styles
-import "@mdi/font/css/materialdesignicons.css";
-// @ts-expect-error TS can't find styles for some reason.
-import "vuetify/styles";
-
-// Composables
+import "@/styles/main.scss";
 import { createVuetify } from "vuetify";
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
-// https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-export default createVuetify({ theme: { defaultTheme: "light" } });
+export default createVuetify({
+  icons: {
+    defaultSet: "mdi",
+    aliases,
+    sets: {
+      mdi,
+    },
+  },
+  theme: { defaultTheme: "light" },
+});
