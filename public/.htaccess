@@ -1,3 +1,4 @@
 RewriteEngine on
-RewriteCond "%{REQUEST_URI}" !(index.html|assets/*)
-RewriteRule "^/(.*)$" "/index.html"
+RewriteBase /tools/
+RewriteCond "%{REQUEST_URI}" !(index\.html|assets/*)
+RewriteRule . index\.html

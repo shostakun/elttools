@@ -48,15 +48,15 @@ onUnmounted(() => {
 
 <template>
   <div
+    class="color-container"
     @click.prevent="handleRefresh"
     @keydown="handleKeydown"
-    class="color-container"
   >
     <div v-if="countdown > 0" class="animation-container">
       <div
-        v-for="(color, i) in colors"
-        :key="`${color.label}-${i}`"
-        :style="{ backgroundColor: color.value }"
+        v-for="(c, i) in colors"
+        :key="`${c.label}-${i}`"
+        :style="{ backgroundColor: c.value }"
         class="animation-tile"
       ></div>
     </div>
