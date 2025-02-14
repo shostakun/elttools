@@ -1,4 +1,4 @@
-import { shuffle, snakeCase } from "lodash";
+import { shuffle } from "lodash";
 
 export interface ColorChoice {
   key: string;
@@ -61,7 +61,7 @@ export const colors = (
   ] as const
 ).reduce(
   (acc, color) => {
-    acc[snakeCase(color.label)] = color;
+    acc[color.key] = color;
     return acc;
   },
   {} as Record<string, ColorChoice>,

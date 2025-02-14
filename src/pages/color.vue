@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { getColorList } from "@/utils/color";
+import tools from "@/types/tools";
+import { colors as colorMap, getColorList } from "@/utils/color";
 import { sample } from "lodash";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
@@ -33,6 +34,9 @@ const handleRefresh = () => {
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === "Enter") {
     handleRefresh();
+  } else if (colorMap.hasOwnProperty(event.key)) {
+    countdown.value = duration;
+    color.value = colorMap[event.key as keyof typeof colorMap];
   }
 };
 
@@ -48,6 +52,7 @@ onUnmounted(() => {
 
 <template>
   <HomeFAB />
+  <ToolMenu :tool="tools.randomColor" />
   <div
     class="color-container"
     @click.prevent="handleRefresh"
