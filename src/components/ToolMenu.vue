@@ -13,8 +13,10 @@ const { tool } = defineProps<{ tool: Tool }>();
           <v-icon :icon="mdiCogs" />
         </v-expansion-panel-title>
         <v-expansion-panel-text>
+          <!-- Actual per-tool settings -->
+          <slot />
+
           <v-expansion-panels>
-            <!-- TODO: Actual settings -->
             <!-- About -->
             <ToolMenuAboutPanel :description="tool.description" />
 

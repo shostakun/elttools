@@ -67,8 +67,10 @@ export const colors = (
   {} as Record<string, ColorChoice>,
 ) as Record<string, ColorChoice>;
 
-export const getColorList = (length: number) => {
-  const vals = shuffle(Object.values(colors));
+export const getColorList = (length: number, keys?: string[]) => {
+  const vals = shuffle(
+    Object.values(colors).filter((c) => !keys?.length || keys.includes(c.key)),
+  );
   const reps = Math.ceil(length / vals.length);
   return Array(reps).fill(vals).flat();
 };

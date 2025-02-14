@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import tools from "@/types/tools";
 import { colors as colorMap, getColorList } from "@/utils/color";
-import { sample } from "lodash";
+import { sample, sortBy } from "lodash";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 const duration = 3;
@@ -9,8 +9,19 @@ const interval = 0.5;
 const countdown = ref(0);
 const size = 7;
 
+const colorOptions = computed(() => sortBy(Object.values(colorMap), ["label"]));
+const selectedColors = ref(colorOptions.value.map((c) => c.key));
+const allSelected = computed(
+  () => selectedColors.value.length === colorOptions.value.length,
+);
+
+const handleSelectAll = () =>
+  (selectedColors.value = allSelected.value
+    ? []
+    : colorOptions.value.map((c) => c.key));
+
 const colorList = computed(() =>
-  getColorList(size * (size + duration / interval)),
+  getColorList(size * (size + duration / interval), selectedColors.value),
 );
 const color = ref(sample(colorList.value));
 const colors = computed(() => {
@@ -52,7 +63,29 @@ onUnmounted(() => {
 
 <template>
   <HomeFAB />
-  <ToolMenu :tool="tools.randomColor" />
+  <ToolMenu :tool="tools.randomColor">
+    <v-select
+      v-model="selectedColors"
+      :items="colorOptions"
+      item-title="label"
+      item-value="key"
+      label="Colors"
+      multiple
+      variant="solo"
+    >
+      <template #prepend-item>
+        <v-list-item title="Select All" @click="handleSelectAll">
+          <template #prepend>
+            <v-checkbox-btn
+              :indeterminate="!!selectedColors.length && !allSelected"
+              :model-value="allSelected"
+            ></v-checkbox-btn>
+          </template>
+        </v-list-item>
+
+        <v-divider class="mt-2"></v-divider> </template
+    ></v-select>
+  </ToolMenu>
   <div
     class="color-container"
     @click.prevent="handleRefresh"
