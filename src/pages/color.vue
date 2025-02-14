@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { getColorList } from "@/utils/color";
 import { sample } from "lodash";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 const duration = 3;
 const interval = 0.5;
@@ -47,6 +47,7 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <HomeFAB />
   <div
     class="color-container"
     @click.prevent="handleRefresh"
