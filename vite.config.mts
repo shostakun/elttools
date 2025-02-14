@@ -22,5 +22,10 @@ export default defineConfig({
     extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
   },
   server: { port: 3000 },
-  css: { preprocessorOptions: { sass: { api: "modern-compiler" } } },
+  css: {
+    preprocessorOptions: {
+      sass: { api: "modern-compiler" },
+      scss: { api: "modern-compiler" },
+    },
+  },
 });
