@@ -24,7 +24,7 @@ export const tools: Tool[] = [
     id: "patterns",
     title: "Patterns",
     thumbnail: PatternThumb,
-    url: `${import.meta.env.VITE_BASE_URL}/patterns`,
+    url: "/patterns",
   },
   {
     controls: [
@@ -41,7 +41,7 @@ export const tools: Tool[] = [
     id: "randomColor",
     title: "Random Color",
     thumbnail: RandomColorThumb,
-    url: `${import.meta.env.VITE_BASE_URL}/colors`,
+    url: "/colors",
   },
 ] as const;
 
