@@ -7,7 +7,7 @@ const { tool } = defineProps<{ tool: Tool }>();
   <v-card :href="tool.url">
     <div class="d-flex flex-no-wrap">
       <v-responsive :aspect-ratio="16 / 9" class="flex-0-0" width="240px">
-        <v-img :src="tool.thumbnail"></v-img>
+        <v-img :src="tool.thumbnail" />
       </v-responsive>
       <div>
         <v-card-title>{{ tool.title }}</v-card-title>

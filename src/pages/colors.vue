@@ -79,12 +79,13 @@ onUnmounted(() => {
             <v-checkbox-btn
               :indeterminate="!!selectedColors.length && !allSelected"
               :model-value="allSelected"
-            ></v-checkbox-btn>
+            />
           </template>
         </v-list-item>
 
-        <v-divider class="mt-2"></v-divider> </template
-    ></v-select>
+        <v-divider class="mt-2"></v-divider>
+      </template>
+    </v-select>
   </ToolMenu>
   <div
     class="color-container"

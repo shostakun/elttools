@@ -11,7 +11,7 @@ import { tools } from "@/types";
       them have been designed with online lessons in mind, but I use them in
       classroom settings as well. Each has some info about how I use them.
     </p>
-    <div>
+    <div class="list">
       <ToolListCard v-for="tool in tools" :key="tool.id" :tool="tool" />
     </div>
   </div>
@@ -22,5 +22,11 @@ import { tools } from "@/types";
   margin: 0 auto;
   max-width: 800px;
   padding: 2rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 </style>

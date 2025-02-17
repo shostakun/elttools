@@ -1,3 +1,4 @@
+import PatternThumb from "@/assets/thumbnails/patterns.png";
 import RandomColorThumb from "@/assets/thumbnails/random-color.png";
 import { colors } from "@/utils/color";
 
@@ -17,6 +18,15 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
+    controls: [{ action: ["Enter"], result: "New pattern" }],
+    description:
+      "Easy hidden patterns. Students must remember the pattern and figure out what comes next. Great for practicing vocabulary.",
+    id: "patterns",
+    title: "Patterns",
+    thumbnail: PatternThumb,
+    url: `${import.meta.env.VITE_BASE_URL}/patterns`,
+  },
+  {
     controls: [
       { action: ["Click", "Enter"], result: "Random color" },
       ...Object.keys(colors)
@@ -31,7 +41,7 @@ export const tools: Tool[] = [
     id: "randomColor",
     title: "Random Color",
     thumbnail: RandomColorThumb,
-    url: `${import.meta.env.VITE_BASE_URL}/color`,
+    url: `${import.meta.env.VITE_BASE_URL}/colors`,
   },
 ] as const;
 
