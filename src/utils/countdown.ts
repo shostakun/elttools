@@ -37,7 +37,8 @@ export const useCountdown = (options: Partial<CountdownOptions> = {}) => {
         countdown.value = Math.max(countdown.value - interval, 0);
       }, interval * 1000);
     }
-    emit(ongoing ? "tick" : "end", newCount);
+    emit("tick", newCount);
+    if (!ongoing) emit("end", newCount);
   });
 
   const countdownRunning = computed(() => countdown.value > 0);

@@ -1,5 +1,6 @@
 import PatternThumb from "@/assets/thumbnails/patterns.png";
 import RandomColorThumb from "@/assets/thumbnails/random-color.png";
+import RandomNumberThumb from "@/assets/thumbnails/random-number.png";
 import { colors } from "@/utils/color";
 
 export interface ToolControl {
@@ -42,6 +43,14 @@ export const tools: Tool[] = [
     title: "Random Color",
     thumbnail: RandomColorThumb,
     url: "/colors",
+  },
+  {
+    controls: [{ action: ["Click", "Enter"], result: "Random number" }],
+    description: "Generate a random number.",
+    id: "randomNumber",
+    title: "Random Number",
+    thumbnail: RandomNumberThumb,
+    url: "/rand",
   },
 ] as const;
 
