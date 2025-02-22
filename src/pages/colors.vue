@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import tools from "@/types/tools";
 import { colors as colorMap, getColorList } from "@/utils/color";
+import { ANY_KEY, useKeys } from "@/utils/keys";
 import { sample, sortBy } from "lodash";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 const duration = 3;
 const interval = 0.5;
@@ -42,22 +43,17 @@ const handleRefresh = () => {
   color.value = sample(colorList.value);
 };
 
-const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === "Enter") {
-    handleRefresh();
-  } else if (colorMap.hasOwnProperty(event.key)) {
+const { onKey } = useKeys();
+onKey("Enter", handleRefresh);
+onKey(ANY_KEY, (event: KeyboardEvent) => {
+  if (colorMap.hasOwnProperty(event.key)) {
     countdown.value = duration;
     color.value = colorMap[event.key as keyof typeof colorMap];
   }
-};
+});
 
 onMounted(() => {
   handleRefresh();
-  addEventListener("keydown", handleKeydown);
-});
-
-onUnmounted(() => {
-  removeEventListener("keydown", handleKeydown);
 });
 </script>
 
@@ -87,11 +83,7 @@ onUnmounted(() => {
       </template>
     </v-select>
   </ToolMenu>
-  <div
-    class="color-container"
-    @click.prevent="handleRefresh"
-    @keydown="handleKeydown"
-  >
+  <div class="color-container" @click.prevent="handleRefresh">
     <div v-if="countdown > 0" class="animation-container">
       <div
         v-for="(c, i) in colors"

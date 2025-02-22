@@ -2,9 +2,10 @@
 import { defaultSet } from "@/assets/cards";
 import type { Card, CardSet } from "@/types/cards";
 import tools from "@/types/tools";
-import { sample, sampleSize, startCase } from "lodash";
-import { computed, onMounted, onUnmounted, ref, watch, type Ref } from "vue";
+import { useKeys } from "@/utils/keys";
 import { mdiRefresh } from "@mdi/js";
+import { sample, sampleSize, startCase } from "lodash";
+import { computed, onMounted, ref, watch, type Ref } from "vue";
 
 const cardSet: Ref<CardSet> = ref(defaultSet);
 
@@ -62,19 +63,11 @@ const handleAnswered = () => {
   if (answered.value >= answerLength.value) reveal.value = true;
 };
 
-const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === "Enter") {
-    handleChoosePattern();
-  }
-};
+const { onKey } = useKeys();
+onKey("Enter", handleChoosePattern);
 
 onMounted(() => {
   handleChoosePattern();
-  addEventListener("keydown", handleKeydown);
-});
-
-onUnmounted(() => {
-  removeEventListener("keydown", handleKeydown);
 });
 
 const imageFor = (i: number) =>
