@@ -1,48 +1,30 @@
 <script setup lang="ts">
 import { type Tool } from "@/types";
-import { mdiCogs } from "@mdi/js";
+import { mdiCogs, mdiInformation } from "@mdi/js";
 
 const { tool } = defineProps<{ tool: Tool }>();
 </script>
 
 <template>
-  <div class="tool-menu-container">
-    <v-expansion-panels>
-      <v-expansion-panel>
-        <v-expansion-panel-title>
-          <v-icon :icon="mdiCogs" />
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <!-- Actual per-tool settings -->
-          <slot />
+  <SettingsMenu>
+    <slot />
 
-          <v-expansion-panels>
-            <!-- About -->
-            <ToolMenuAboutPanel :description="tool.description" />
+    <template #panels>
+      <!-- About -->
+      <SettingsMenuPanel :icon="mdiInformation" label="About">
+        {{ tool.description }}
+      </SettingsMenuPanel>
 
-            <!-- Controls -->
-            <ToolMenuControlsPanel
-              v-if="tool.controls.length"
-              :controls="tool.controls"
-            />
-          </v-expansion-panels>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-    </v-expansion-panels>
-  </div>
+      <!-- Controls -->
+      <ToolMenuControlsPanel
+        v-if="tool.controls.length"
+        :controls="tool.controls"
+      />
+
+      <!-- Global settings -->
+      <SettingsMenuPanel :icon="mdiCogs" label="Global Settings">
+        <GlobalSettings />
+      </SettingsMenuPanel>
+    </template>
+  </SettingsMenu>
 </template>
-
-<style lang="scss">
-.sub-panel-title {
-  align-items: center;
-  display: flex;
-  gap: 0.5rem;
-}
-
-.tool-menu-container {
-  max-width: 400px;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-</style>

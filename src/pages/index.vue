@@ -3,6 +3,10 @@ import { tools } from "@/types";
 </script>
 
 <template>
+  <SettingsMenu>
+    <GlobalSettings />
+  </SettingsMenu>
+
   <div class="container">
     <h1>ELT Tools</h1>
     <h2>for the classroom or online</h2>

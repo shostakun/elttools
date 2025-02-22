@@ -10,5 +10,9 @@ export default createVuetify({
       mdi,
     },
   },
-  theme: { defaultTheme: "light" },
+  theme: {
+    defaultTheme: window.matchMedia?.("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light",
+  },
 });
