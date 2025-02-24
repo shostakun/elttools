@@ -2,7 +2,18 @@ import "@/styles/main.scss";
 import { createVuetify } from "vuetify";
 import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
+const sliderDefaults = {
+  class: "slider-with-thumb-label",
+  hideDetails: true,
+  step: 1,
+  thumbLabel: "always",
+} as const;
+
 export default createVuetify({
+  defaults: {
+    VRangeSlider: sliderDefaults,
+    VSlider: sliderDefaults,
+  },
   icons: {
     defaultSet: "mdi",
     aliases,

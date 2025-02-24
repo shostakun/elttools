@@ -1,5 +1,5 @@
 import { merge } from "lodash";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useEmitter } from "./emitter";
 
 interface CountdownOptions {
@@ -15,8 +15,8 @@ export const useCountdown = (options: Partial<CountdownOptions> = {}) => {
   const opts = ref(
     merge(
       {
-        duration: 3,
-        interval: 0.5,
+        duration: 2,
+        interval: 0.25,
       },
       options,
     ) as CountdownOptions,
@@ -24,22 +24,22 @@ export const useCountdown = (options: Partial<CountdownOptions> = {}) => {
   const { duration, interval } = opts.value;
 
   const countdown = ref(0);
+  const intervalId = ref(0);
 
   const startCountdown = () => {
+    clearInterval(intervalId.value);
     countdown.value = duration;
     emit("start", duration);
+    emit("tick", duration);
+    intervalId.value = setInterval(() => {
+      countdown.value = Math.max(countdown.value - interval, 0);
+      emit("tick", countdown.value);
+      if (countdown.value <= 0) {
+        clearInterval(intervalId.value);
+        emit("end", 0);
+      }
+    }, interval * 1000);
   };
-
-  watch(countdown, (newCount) => {
-    const ongoing = newCount > 0;
-    if (ongoing) {
-      setTimeout(() => {
-        countdown.value = Math.max(countdown.value - interval, 0);
-      }, interval * 1000);
-    }
-    emit("tick", newCount);
-    if (!ongoing) emit("end", newCount);
-  });
 
   const countdownRunning = computed(() => countdown.value > 0);
 

@@ -31,7 +31,7 @@ watch(magnitude, (newMag, oldMag) => {
 });
 
 const { countdownRunning, onCountdownTick, startCountdown } = useCountdown({
-  interval: 0.2,
+  interval: 0.1,
 });
 
 onCountdownTick(chooseAnswer);
@@ -57,18 +57,9 @@ onMounted(() => {
       label="Range"
       :max="rangeRange.upper"
       :min="rangeRange.lower"
-      step="1"
-      thumb-label="always"
     />
-    <v-slider
-      v-model="magnitude"
-      label="Magnitude"
-      max="10"
-      min="1"
-      step="1"
-      thumb-label="always"
-    />
-    <v-checkbox v-model="negative" label="Negative" />
+    <v-slider v-model="magnitude" label="Magnitude" max="10" min="1" />
+    <v-checkbox v-model="negative" density="compact" label="Negative" />
   </ToolMenu>
   <div class="rand-container" @click.prevent="handleRefresh">
     <div :class="answerClass">{{ answer }}</div>
@@ -92,6 +83,7 @@ onMounted(() => {
 
   &.rand-animation {
     filter: blur(10px);
+    font-size: 25vh;
     opacity: 0.3;
   }
 }
