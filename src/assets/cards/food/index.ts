@@ -1,22 +1,26 @@
-import CurryCard from "./curry.png";
-import PizzaCard from "./pizza.png";
-import SandwichCard from "./sandwich.png";
+// [[[cog from gen_cards import *; files = get_card_files(); gen_card_imports(files)]]]
+import curryCard from "./curry.png";
+import pizzaCard from "./pizza.png";
+import sandwichCard from "./sandwich.png";
+// [[[end]]]
 import { type CardSet } from "@/types/cards";
 import { makeCards, makeSet } from "@/utils/cards";
 
 const imageMap = {
+  // [[[cog gen_card_specs(files, ["anime", "dish", "food", "one"])]]]
   curry: {
-    images: [CurryCard],
+    images: [curryCard],
     tags: ["anime", "curry", "dish", "food", "one"],
   },
   pizza: {
-    images: [PizzaCard],
+    images: [pizzaCard],
     tags: ["anime", "dish", "food", "one", "pizza"],
   },
   sandwich: {
-    images: [SandwichCard],
+    images: [sandwichCard],
     tags: ["anime", "dish", "food", "one", "sandwich"],
   },
+  // [[[end]]]
 } as const;
 
 export const images = makeCards(imageMap);

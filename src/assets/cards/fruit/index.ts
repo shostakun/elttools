@@ -1,32 +1,36 @@
-import AppleCard from "./apple.png";
-import BananaCard from "./banana.png";
-import KiwiCard from "./kiwi.png";
-import OrangeCard from "./orange.png";
-import WatermelonCard from "./watermelon.png";
+// [[[cog from gen_cards import *; files = get_card_files(); gen_card_imports(files)]]]
+import appleCard from "./apple.png";
+import bananaCard from "./banana.png";
+import kiwiCard from "./kiwi.png";
+import orangeCard from "./orange.png";
+import watermelonCard from "./watermelon.png";
+// [[[end]]]
 import { type CardSet } from "@/types/cards";
 import { makeCards, makeSet } from "@/utils/cards";
 
 const imageMap = {
+  // [[[cog gen_card_specs(files, ["anime", "fruit", "one"])]]]
   apple: {
-    images: [AppleCard],
+    images: [appleCard],
     tags: ["anime", "apple", "fruit", "one"],
   },
   banana: {
-    images: [BananaCard],
+    images: [bananaCard],
     tags: ["anime", "banana", "fruit", "one"],
   },
   kiwi: {
-    images: [KiwiCard],
+    images: [kiwiCard],
     tags: ["anime", "fruit", "kiwi", "one"],
   },
   orange: {
-    images: [OrangeCard],
+    images: [orangeCard],
     tags: ["anime", "fruit", "one", "orange"],
   },
   watermelon: {
-    images: [WatermelonCard],
+    images: [watermelonCard],
     tags: ["anime", "fruit", "one", "watermelon"],
   },
+  // [[[end]]]
 } as const;
 
 export const images = makeCards(imageMap);

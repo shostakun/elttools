@@ -6,9 +6,12 @@
   "scripts": {
     "build": "run-p type-check \"build-only {@}\" --",
     "build-only": "vite build",
+    "check": "yarn cog-check && yarn prettier --check . && eslint --stats . && yarn type-check",
+    "cog-check": "cog -I src/assets/cards --check src/assets/**/index.ts",
     "deploy": "rsync -av --delete dist/ $DEPLOY_DEST",
     "dev": "vite",
     "format": "yarn prettier --write .",
+    "gen": "cog -I src/assets/cards -r src/assets/**/index.ts && yarn format",
     "lint": "eslint . --fix",
     "preview": "vite preview",
     "type-check": "vue-tsc --build --force"
