@@ -1,32 +1,24 @@
-// [[[cog from gen_cards import *; files = get_card_files(); gen_card_imports(files)]]]
-import curryCard from "./curry.png";
-import pizzaCard from "./pizza.png";
-import sandwichCard from "./sandwich.png";
+import type { CardSet } from "@/types/cards";
+// [[[cog from gen_cards import *; dirs = get_subdirs(); gen_set_imports(dirs)]]]
+import { images as dishesImages, sets as dishesSets } from "./dishes";
+import { images as fruitImages, sets as fruitSets } from "./fruit";
+import { images as sweetsImages, sets as sweetsSets } from "./sweets";
 // [[[end]]]
-import { type CardSet } from "@/types/cards";
-import { makeCards, makeSet } from "@/utils/cards";
 
-const imageMap = {
-  // [[[cog gen_card_specs(files, ["anime", "dish", "food", "one"])]]]
-  curry: {
-    images: [curryCard],
-    tags: ["anime", "curry", "dish", "food", "one"],
-  },
-  pizza: {
-    images: [pizzaCard],
-    tags: ["anime", "dish", "food", "one", "pizza"],
-  },
-  sandwich: {
-    images: [sandwichCard],
-    tags: ["anime", "dish", "food", "one", "sandwich"],
-  },
+export const images = {
+  // [[[cog gen_set_image_map(dirs)]]]
+  ...dishesImages,
+  ...fruitImages,
+  ...sweetsImages,
   // [[[end]]]
-} as const;
-
-export const images = makeCards(imageMap);
+};
 
 export const imageList = Object.values(images);
 
 export const sets: Record<string, CardSet> = {
-  ...makeSet(imageList, "food", ["food", "one"]),
+  // [[[cog gen_set_map(dirs)]]]
+  ...dishesSets,
+  ...fruitSets,
+  ...sweetsSets,
+  // [[[end]]]
 };
