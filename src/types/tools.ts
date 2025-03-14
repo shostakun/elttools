@@ -21,10 +21,13 @@ export interface Tool {
 export const tools: Tool[] = [
   {
     controls: [{ action: ["Enter"], result: "New board" }],
-    description:
-      "Find the same picture on the left and right side of the board. Or, for a challenge, find the different picture! Great as a filler. I recommend starting with 3x3 boards when explaining, then moving on to 4x4 boards.",
+    description: `Find the same picture on the left and right side of the board. Or, reverse it and find the different picture! Great as a filler.
+
+I recommend starting with 3x3 boards when explaining, then moving on to 4x4 boards.
+
+You can select the card sets you want to include. Just make sure to choose enough cards for the board size you want!`,
     id: "same",
-    title: "Same",
+    title: "Find the Same",
     thumbnail: SameThumb,
     url: "/same",
   },

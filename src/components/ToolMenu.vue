@@ -12,7 +12,7 @@ const { tool } = defineProps<{ tool: Tool }>();
     <template #panels>
       <!-- About -->
       <SettingsMenuPanel :icon="mdiInformation" label="About">
-        {{ tool.description }}
+        <Markdown :text="tool.description" />
       </SettingsMenuPanel>
 
       <!-- Controls -->

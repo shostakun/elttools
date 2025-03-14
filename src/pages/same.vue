@@ -15,16 +15,14 @@ const cardSets: Ref<CardSet[]> = ref(Object.values(sets));
 const findSame = ref(true);
 const guess = ref<Card | null>(null);
 const images = computed(() => flattenSetList(cardSets.value));
-const maxBoardSize = computed(() => {
-  console.log("max recalculated", images.value);
-  return Math.floor(Math.sqrt((images.value.length + 1) / 2));
-});
+const maxBoardSize = computed(() =>
+  Math.floor(Math.sqrt((images.value.length + 1) / 2)),
+);
 const minBoardSize = 2;
 const boardSize = computed(() =>
   clamp(boardSizeModel.value, minBoardSize, maxBoardSize.value),
 );
 const enoughCards = computed(() => maxBoardSize.value >= minBoardSize);
-console.log("images", images.value.length, maxBoardSize.value);
 
 const handleMakeBoard = () => {
   const boardCount = boardSize.value ** 2;

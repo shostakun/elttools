@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type Tool } from "@/types";
+
 const { tool } = defineProps<{ tool: Tool }>();
 </script>
 
@@ -9,10 +10,24 @@ const { tool } = defineProps<{ tool: Tool }>();
       <v-responsive :aspect-ratio="16 / 9" class="flex-0-0" width="240px">
         <v-img :src="tool.thumbnail" />
       </v-responsive>
-      <div>
+      <div class="card-text">
         <v-card-title>{{ tool.title }}</v-card-title>
-        <v-card-text>{{ tool.description }}</v-card-text>
+        <v-card-text>
+          <Markdown :text="tool.description" />
+        </v-card-text>
       </div>
     </div>
   </v-card>
 </template>
+
+<style lang="scss" scoped>
+.card-text {
+  display: flex;
+  flex-direction: column;
+  max-height: 135px;
+
+  & > :not(:first-child) {
+    flex: 1 1 auto;
+  }
+}
+</style>
