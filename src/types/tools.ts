@@ -1,6 +1,7 @@
 import PatternThumb from "@/assets/thumbnails/patterns.png";
 import RandomColorThumb from "@/assets/thumbnails/random-color.png";
 import RandomNumberThumb from "@/assets/thumbnails/random-number.png";
+import SameThumb from "@/assets/thumbnails/same.png";
 import { colors } from "@/utils/color";
 
 export interface ToolControl {
@@ -18,6 +19,15 @@ export interface Tool {
 }
 
 export const tools: Tool[] = [
+  {
+    controls: [{ action: ["Enter"], result: "New board" }],
+    description:
+      "Find the same picture on the left and right side of the board. Or, for a challenge, find the different picture! Great as a filler. I recommend starting with 3x3 boards when explaining, then moving on to 4x4 boards.",
+    id: "same",
+    title: "Same",
+    thumbnail: SameThumb,
+    url: "/same",
+  },
   {
     controls: [{ action: ["Enter"], result: "New pattern" }],
     description:

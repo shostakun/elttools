@@ -13,6 +13,7 @@ declare module 'vue' {
     PatternCell: typeof import('./src/components/PatternCell.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SameImageCell: typeof import('./src/components/SameImageCell.vue')['default']
     SettingsMenu: typeof import('./src/components/SettingsMenu.vue')['default']
     SettingsMenuPanel: typeof import('./src/components/SettingsMenuPanel.vue')['default']
     ToolListCard: typeof import('./src/components/ToolListCard.vue')['default']

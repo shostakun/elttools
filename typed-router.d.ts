@@ -22,5 +22,6 @@ declare module 'vue-router/auto-routes' {
     '/colors': RouteRecordInfo<'/colors', '/colors', Record<never, never>, Record<never, never>>,
     '/patterns': RouteRecordInfo<'/patterns', '/patterns', Record<never, never>, Record<never, never>>,
     '/rand': RouteRecordInfo<'/rand', '/rand', Record<never, never>, Record<never, never>>,
+    '/same': RouteRecordInfo<'/same', '/same', Record<never, never>, Record<never, never>>,
   }
 }

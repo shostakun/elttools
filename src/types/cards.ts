@@ -19,3 +19,9 @@ export interface CardSet {
 }
 
 export type CardSetMap = Record<string, CardSet>;
+
+export enum Highlight {
+  correct = "correct",
+  incorrect = "incorrect",
+  none = "none",
+}

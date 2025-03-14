@@ -13,6 +13,11 @@ export default createVuetify({
   defaults: {
     VRangeSlider: sliderDefaults,
     VSlider: sliderDefaults,
+    VSwitch: {
+      color: "primary",
+      hideDetails: true,
+      inset: true,
+    },
   },
   icons: {
     defaultSet: "mdi",
