@@ -1,3 +1,5 @@
+import { uniqBy } from "lodash";
+
 export interface Card {
   id: string;
   images: readonly string[];
@@ -19,6 +21,9 @@ export interface CardSet {
 }
 
 export type CardSetMap = Record<string, CardSet>;
+
+export const flattenSetList = (sets: CardSet[]): Card[] =>
+  uniqBy(sets.map((s) => s.cards).flat(), "id");
 
 export enum Highlight {
   correct = "correct",

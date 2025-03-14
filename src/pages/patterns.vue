@@ -93,7 +93,6 @@ const imageFor = (i: number) =>
       :items="difficultyOptions"
       label="Difficulty"
       multiple
-      variant="solo"
     >
       <template #prepend-item>
         <v-list-item title="Select All" @click="handleSelectAll">

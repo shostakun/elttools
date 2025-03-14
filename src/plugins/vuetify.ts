@@ -12,6 +12,9 @@ const sliderDefaults = {
 export default createVuetify({
   defaults: {
     VRangeSlider: sliderDefaults,
+    VSelect: {
+      variant: "solo",
+    },
     VSlider: sliderDefaults,
     VSwitch: {
       color: "primary",

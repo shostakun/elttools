@@ -1,26 +1,35 @@
 <script setup lang="ts">
-import { images } from "@/assets/cards";
-import { type Card } from "@/types/cards";
+import { sets } from "@/assets/cards";
+import { flattenSetList, type Card, type CardSet } from "@/types/cards";
 import tools from "@/types/tools";
 import { useCountdown } from "@/utils/countdown";
 import { useKeys } from "@/utils/keys";
-import { sampleSize, shuffle } from "lodash";
-import { onMounted, ref, watch } from "vue";
+import { clamp, sampleSize, shuffle } from "lodash";
+import { computed, onMounted, ref, watch, type Ref } from "vue";
 
 const answers = ref<Card[]>([]);
 const boardA = ref<Card[]>([]);
 const boardB = ref<Card[]>([]);
-const boardSize = ref(4);
+const boardSizeModel = ref(4);
+const cardSets: Ref<CardSet[]> = ref(Object.values(sets));
 const findSame = ref(true);
 const guess = ref<Card | null>(null);
-const maxBoardSize = Math.floor(
-  Math.sqrt((Object.values(images).length + 1) / 2),
+const images = computed(() => flattenSetList(cardSets.value));
+const maxBoardSize = computed(() => {
+  console.log("max recalculated", images.value);
+  return Math.floor(Math.sqrt((images.value.length + 1) / 2));
+});
+const minBoardSize = 2;
+const boardSize = computed(() =>
+  clamp(boardSizeModel.value, minBoardSize, maxBoardSize.value),
 );
+const enoughCards = computed(() => maxBoardSize.value >= minBoardSize);
+console.log("images", images.value.length, maxBoardSize.value);
 
 const handleMakeBoard = () => {
   const boardCount = boardSize.value ** 2;
   const nImages = boardCount * 2 - 1;
-  const samples = sampleSize(images, nImages);
+  const samples = sampleSize(images.value, nImages);
   if (samples.length < nImages) return;
   guess.value = null;
   answers.value = [samples.pop() as Card];
@@ -37,7 +46,7 @@ const handleMakeBoard = () => {
   ]);
 };
 
-watch([boardSize, findSame], handleMakeBoard);
+watch([boardSize, cardSets, findSame], handleMakeBoard);
 
 const { onKey } = useKeys();
 onKey("Enter", handleMakeBoard);
@@ -67,12 +76,12 @@ onMounted(() => {
 <template>
   <HomeFAB />
   <ToolMenu :tool="tools.same">
-    <!-- TODO: Add the ability to choose card sets. -->
+    <CardSetSelector v-model="cardSets" />
     <v-slider
-      v-model="boardSize"
+      v-model="boardSizeModel"
       label="Board size"
       :max="maxBoardSize"
-      min="3"
+      :min="minBoardSize"
     />
     <v-switch v-model="findSame" label="Find same" />
   </ToolMenu>
@@ -83,9 +92,10 @@ onMounted(() => {
         New board in {{ countdownStepsRemaining }}...
       </h1>
       <h1 v-else>Find the {{ findSame ? "same" : "different" }} picture!</h1>
+      <h2 v-if="!enoughCards">Not enough cards, please choose more...</h2>
     </div>
     <div
-      v-if="answers.length && boardA.length && boardB.length"
+      v-if="enoughCards && answers.length && boardA.length && boardB.length"
       class="board-container"
     >
       <table>

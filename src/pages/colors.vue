@@ -64,7 +64,6 @@ onMounted(() => {
       item-value="key"
       label="Colors"
       multiple
-      variant="solo"
     >
       <template #prepend-item>
         <v-list-item title="Select All" @click="handleSelectAll">
