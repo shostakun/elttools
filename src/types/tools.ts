@@ -33,7 +33,10 @@ You can select the card sets you want to include. Just make sure to choose enoug
     url: "/same",
   },
   {
-    controls: [],
+    controls: [
+      { action: ["Enter"], result: "New game" },
+      { action: ["1-9"], result: "Play in the corresponding square" },
+    ],
     description: `Play Tic-Tac-Toe to practice reading. Students must read out the words to make a move.
 
 The early sets each introduce a few new letter sounds, while later sets contrast some of the more difficult sounds.

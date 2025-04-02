@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import tools from "@/types/tools";
-import { useKeys } from "@/utils/keys";
+import { ANY_KEY, useKeys } from "@/utils/keys";
 import { calcTextWidth } from "@/utils/text";
+import { mdiRefresh } from "@mdi/js";
 import classNames from "classnames";
 import { chunk, shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
@@ -68,7 +69,7 @@ const wordWidth = computed(() =>
   ),
 );
 
-const showNumbers = ref(false);
+const showNumbers = ref(true);
 
 const limitMoves = ref(false);
 const moves = ref<Move[]>([]);
@@ -94,6 +95,9 @@ function set2D<T>(arr: T[][], index1D: number, value: T) {
   arr[row][col] = value;
 }
 
+const player = ref(players[0]);
+const winner = ref<Player | null>(null);
+
 const wins = computed(() => {
   const cells: boolean[][] = chunk(Array(size ** 2).fill(false), size);
   const lines = [
@@ -118,15 +122,15 @@ const wins = computed(() => {
       line.forEach((i) => {
         set2D(cells, i, true);
       });
+      if (!winner.value) winner.value = word as Player;
     }
   });
   return cells;
 });
 
-const player = ref(players[0]);
-
 const handleRefresh = () => {
   player.value = players[0];
+  winner.value = null;
   wordCells.value = chooseWords(selectedWords.value);
   moves.value = [];
 };
@@ -145,7 +149,12 @@ const handleMove = (index: number) => {
 
 const { onKey } = useKeys();
 onKey("Enter", handleRefresh);
-// TODO: implement keys for moves
+onKey(ANY_KEY, (evt) => {
+  const k = parseInt(evt.key);
+  if (k >= 1 && k <= size ** 2) {
+    handleMove(k - 1);
+  }
+});
 
 onMounted(() => {
   handleRefresh();
@@ -189,19 +198,35 @@ onMounted(() => {
         </tr>
       </table>
     </div>
-    <div>It's {{ player }}'s turn.</div>
+    <div class="tic-tac-toe-actions">
+      <div v-if="winner">{{ winner }} wins!</div>
+      <div v-else>It's {{ player }}'s turn.</div>
+      <v-btn color="primary" size="x-large" @click="handleRefresh">
+        <template #prepend>
+          <v-icon :icon="mdiRefresh" />
+        </template>
+        New Game
+      </v-btn>
+    </div>
   </div>
 </template>
 
 <style lang="scss">
+.tic-tac-toe-actions {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
 .tic-tac-toe-container {
   align-items: center;
   display: flex;
   flex-direction: column;
   font-size: 4rem;
-  gap: 3rem;
+  gap: 1rem;
   height: 100%;
   justify-content: center;
+  padding: 1rem 0;
   position: relative;
   width: 100%;
 
