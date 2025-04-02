@@ -1,7 +1,9 @@
 @use "vuetify" with (
-  $body-font-family: sans-serif,
-  $heading-font-family: sans-serif
+  $body-font-family: "Alata",
+  $heading-font-family: "Alata"
 );
+
+@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
 
 .slider-with-thumb-label {
   margin-top: 25px;

@@ -2,6 +2,7 @@ import PatternThumb from "@/assets/thumbnails/patterns.png";
 import RandomColorThumb from "@/assets/thumbnails/random-color.png";
 import RandomNumberThumb from "@/assets/thumbnails/random-number.png";
 import SameThumb from "@/assets/thumbnails/same.png";
+import TicTacToeThumb from "@/assets/thumbnails/tictactoe.png";
 import { colors } from "@/utils/color";
 
 export interface ToolControl {
@@ -30,6 +31,18 @@ You can select the card sets you want to include. Just make sure to choose enoug
     title: "Find the Same",
     thumbnail: SameThumb,
     url: "/same",
+  },
+  {
+    controls: [],
+    description: `Play Tic-Tac-Toe to practice reading. Students must read out the words to make a move.
+
+The early sets each introduce a few new letter sounds, while later sets contrast some of the more difficult sounds.
+
+The is also **limit move** mode for older students who might be bored by Tic-Tac-Toe; in this mode you can only make three moves; when you make the fourth, the first move disappears.`,
+    id: "ticTacToe",
+    title: "Phonics Tic-Tac-Toe",
+    thumbnail: TicTacToeThumb,
+    url: "/tictactoe",
   },
   {
     controls: [{ action: ["Enter"], result: "New pattern" }],
