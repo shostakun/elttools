@@ -95,7 +95,9 @@ function set2D<T>(arr: T[][], index1D: number, value: T) {
   arr[row][col] = value;
 }
 
-const player = ref(players[0]);
+const maruStarts = ref(true);
+const firstPlayer = () => players[maruStarts.value ? 0 : 1];
+const player = ref(firstPlayer());
 const winner = ref<Player | null>(null);
 
 const wins = computed(() => {
@@ -128,8 +130,14 @@ const wins = computed(() => {
   return cells;
 });
 
+watch(maruStarts, () => {
+  if (!board.value.some((row) => row.some((word) => isPlayer(word)))) {
+    player.value = firstPlayer();
+  }
+});
+
 const handleRefresh = () => {
-  player.value = players[0];
+  player.value = firstPlayer();
   winner.value = null;
   wordCells.value = chooseWords(selectedWords.value);
   moves.value = [];
@@ -171,6 +179,7 @@ onMounted(() => {
       label="Word set"
       return-object
     />
+    <v-switch v-model="maruStarts" :label="`${Player.maru} starts`" />
     <v-switch v-model="limitMoves" label="Limit moves" />
     <v-switch v-model="showNumbers" label="Show numbers" />
   </ToolMenu>
