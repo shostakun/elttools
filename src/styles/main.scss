@@ -1,9 +1,17 @@
 @use "vuetify" with (
-  $body-font-family: "Alata",
-  $heading-font-family: "Alata"
+  $body-font-family: var(--v-font-family),
+  $heading-font-family: var(--v-font-family)
 );
 
-@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alata&family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap");
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("/assets/OpenDyslexic-Regular.woff2");
+}
+
+:root {
+  --v-font-family: "Alata";
+}
 
 .slider-with-thumb-label {
   margin-top: 25px;
