@@ -1,10 +1,16 @@
 import DiceThumb from "@/assets/thumbnails/dice.png";
+import DiceThumbDark from "@/assets/thumbnails/dice-dark.png";
 import PatternThumb from "@/assets/thumbnails/patterns.png";
+import PatternThumbDark from "@/assets/thumbnails/patterns-dark.png";
 import RandomColorThumb from "@/assets/thumbnails/random-color.png";
 import RandomNumberThumb from "@/assets/thumbnails/random-number.png";
+import RandomNumberThumbDark from "@/assets/thumbnails/random-number-dark.png";
 import SameThumb from "@/assets/thumbnails/same.png";
+import SameThumbDark from "@/assets/thumbnails/same-dark.png";
 import TicTacToeThumb from "@/assets/thumbnails/tictactoe.png";
+import TicTacToeThumbDark from "@/assets/thumbnails/tictactoe-dark.png";
 import TypingThumb from "@/assets/thumbnails/typing.png";
+import TypingThumbDark from "@/assets/thumbnails/typing-dark.png";
 import { colors } from "@/utils/color";
 
 export interface ToolControl {
@@ -18,6 +24,7 @@ export interface Tool {
   id: string;
   title: string;
   thumbnail: string;
+  thumbnailDark?: string;
   url: string;
 }
 
@@ -35,6 +42,7 @@ export const tools: Tool[] = [
     id: "dice",
     title: "Dice",
     thumbnail: DiceThumb,
+    thumbnailDark: DiceThumbDark,
     url: "/dice",
   },
   {
@@ -47,6 +55,7 @@ You can select the card sets you want to include. Just make sure to choose enoug
     id: "same",
     title: "Find the Same",
     thumbnail: SameThumb,
+    thumbnailDark: SameThumbDark,
     url: "/same",
   },
   {
@@ -62,6 +71,7 @@ The is also **limit move** mode for older students who might be bored by Tic-Tac
     id: "ticTacToe",
     title: "Phonics Tic-Tac-Toe",
     thumbnail: TicTacToeThumb,
+    thumbnailDark: TicTacToeThumbDark,
     url: "/tictactoe",
   },
   {
@@ -71,6 +81,7 @@ The is also **limit move** mode for older students who might be bored by Tic-Tac
     id: "patterns",
     title: "Patterns",
     thumbnail: PatternThumb,
+    thumbnailDark: PatternThumbDark,
     url: "/patterns",
   },
   {
@@ -96,6 +107,7 @@ The is also **limit move** mode for older students who might be bored by Tic-Tac
     id: "randomNumber",
     title: "Random Number",
     thumbnail: RandomNumberThumb,
+    thumbnailDark: RandomNumberThumbDark,
     url: "/rand",
   },
   {
@@ -105,6 +117,7 @@ The is also **limit move** mode for older students who might be bored by Tic-Tac
     id: "typing",
     title: "Typing",
     thumbnail: TypingThumb,
+    thumbnailDark: TypingThumbDark,
     url: "/typing",
   },
 ] as const;

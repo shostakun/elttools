@@ -19,6 +19,7 @@ declare module 'vue' {
     SameImageCell: typeof import('./src/components/SameImageCell.vue')['default']
     SettingsMenu: typeof import('./src/components/SettingsMenu.vue')['default']
     SettingsMenuPanel: typeof import('./src/components/SettingsMenuPanel.vue')['default']
+    ThemeProvider: typeof import('./src/components/ThemeProvider.vue')['default']
     Timer: typeof import('./src/components/Timer.vue')['default']
     ToolListCard: typeof import('./src/components/ToolListCard.vue')['default']
     ToolMenu: typeof import('./src/components/ToolMenu.vue')['default']

@@ -5,10 +5,6 @@ import { onMounted, ref, watch } from "vue";
 
 const { darkMode, storeDarkMode } = useDarkMode();
 
-const handleToggle = () => {
-  storeDarkMode();
-};
-
 const selectedFont = ref(DEFAULT_FONT);
 watch(selectedFont, () => setGlobalFont(selectedFont.value));
 onMounted(() => (selectedFont.value = getGlobalFont()));
@@ -18,7 +14,7 @@ onMounted(() => (selectedFont.value = getGlobalFont()));
   <v-switch
     v-model="darkMode"
     label="Dark mode"
-    @update:model-value="handleToggle"
+    @update:model-value="storeDarkMode"
   />
   <FontSelector v-model="selectedFont" />
 </template>
