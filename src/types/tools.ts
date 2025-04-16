@@ -1,3 +1,4 @@
+import DiceThumb from "@/assets/thumbnails/dice.png";
 import PatternThumb from "@/assets/thumbnails/patterns.png";
 import RandomColorThumb from "@/assets/thumbnails/random-color.png";
 import RandomNumberThumb from "@/assets/thumbnails/random-number.png";
@@ -20,6 +21,21 @@ export interface Tool {
 }
 
 export const tools: Tool[] = [
+  {
+    controls: [
+      { action: ["Enter"], result: "Roll" },
+      {
+        action: ["1-9"],
+        result:
+          "Reveal the number in corresponding square (reading left to right, top to bottom)",
+      },
+    ],
+    description: `A replacement for rolling dice. Students choose one of the cards. Click the card to reveal a number. Good way to get a little extra vocab practice in while playing a game.`,
+    id: "dice",
+    title: "Dice",
+    thumbnail: DiceThumb,
+    url: "/dice",
+  },
   {
     controls: [{ action: ["Enter"], result: "New board" }],
     description: `Find the same picture on the left and right side of the board. Or, reverse it and find the different picture! Great as a filler.
