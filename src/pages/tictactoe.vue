@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { getGlobalFont } from "@/types/font";
 import tools from "@/types/tools";
 import { ANY_KEY, useKeys } from "@/utils/keys";
 import { calcTextWidth } from "@/utils/text";
@@ -64,7 +65,7 @@ const table = useTemplateRef("table");
 const wordWidth = computed(() =>
   Math.max(
     ...wordCells.value.map((word) =>
-      calcTextWidth(word, table.value ?? `64px "Alata"`),
+      calcTextWidth(word, table.value ?? `64px ${getGlobalFont()}`),
     ),
   ),
 );

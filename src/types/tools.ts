@@ -4,6 +4,7 @@ import RandomColorThumb from "@/assets/thumbnails/random-color.png";
 import RandomNumberThumb from "@/assets/thumbnails/random-number.png";
 import SameThumb from "@/assets/thumbnails/same.png";
 import TicTacToeThumb from "@/assets/thumbnails/tictactoe.png";
+import TypingThumb from "@/assets/thumbnails/typing.png";
 import { colors } from "@/utils/color";
 
 export interface ToolControl {
@@ -96,6 +97,15 @@ The is also **limit move** mode for older students who might be bored by Tic-Tac
     title: "Random Number",
     thumbnail: RandomNumberThumb,
     url: "/rand",
+  },
+  {
+    controls: [],
+    description:
+      "Practice typing with English and (romanized) Japanese words. Designed for use with both Mac and Windows Japanese keyboards.",
+    id: "typing",
+    title: "Typing",
+    thumbnail: TypingThumb,
+    url: "/typing",
   },
 ] as const;
 

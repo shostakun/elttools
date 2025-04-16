@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { DEFAULT_FONT, getGlobalFont, setGlobalFont } from "@/types/font";
 import { useDarkMode } from "@/utils/darkMode";
 import { onMounted, ref, watch } from "vue";
 
@@ -8,28 +9,9 @@ const handleToggle = () => {
   storeDarkMode();
 };
 
-const fontOptions = [
-  { title: "Atkinson", value: '"Atkinson Hyperlegible Mono"' },
-  { title: "Alata" },
-  { title: "OpenDyslexic" },
-].map((obj) => ({ value: `"${obj.title}"`, ...obj }));
-
-const selectedFont = ref("Alata");
-
-watch(selectedFont, () =>
-  document.documentElement.style.setProperty(
-    "--v-font-family",
-    selectedFont.value,
-  ),
-);
-
-onMounted(() => {
-  const rootStyles = getComputedStyle(document.documentElement);
-  const font = rootStyles.getPropertyValue("--v-font-family").trim();
-  if (fontOptions.find(({ value }) => value === font)) {
-    selectedFont.value = font;
-  }
-});
+const selectedFont = ref(DEFAULT_FONT);
+watch(selectedFont, () => setGlobalFont(selectedFont.value));
+onMounted(() => (selectedFont.value = getGlobalFont()));
 </script>
 
 <template>
@@ -38,11 +20,5 @@ onMounted(() => {
     label="Dark mode"
     @update:model-value="handleToggle"
   />
-  <v-select v-model="selectedFont" :items="fontOptions" label="Font"
-    ><template #item="{ props: itemProps, item }">
-      <v-list-item
-        v-bind="itemProps"
-        :style="{ fontFamily: item.value }"
-      ></v-list-item> </template
-  ></v-select>
+  <FontSelector v-model="selectedFont" />
 </template>

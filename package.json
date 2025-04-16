@@ -20,9 +20,11 @@
     "@mdi/font": "7.4.47",
     "classnames": "^2.5.1",
     "core-js": "^3.37.1",
+    "keysight": "^0.2.0",
     "lodash": "^4.17.21",
     "micromark": "^4.0.2",
     "roboto-fontface": "*",
+    "shim-keyboard-event-key": "^1.0.3",
     "vue": "^3.4.31",
     "vuetify": "^3.6.14"
   },
