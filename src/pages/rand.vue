@@ -78,7 +78,6 @@ onMounted(() => {
 }
 
 .rand-answer {
-  font-family: monospace;
   font-size: 33vh;
 
   &.rand-animation {
