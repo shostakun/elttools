@@ -4,6 +4,7 @@ import { flattenSetList, type Card, type CardSet } from "@/types/cards";
 import tools from "@/types/tools";
 import { useCountdown } from "@/utils/countdown";
 import { useKeys } from "@/utils/keys";
+import { mdiRefresh } from "@mdi/js";
 import { clamp, sampleSize, shuffle } from "lodash";
 import { computed, onMounted, ref, watch, type Ref } from "vue";
 
@@ -12,6 +13,7 @@ const boardA = ref<Card[]>([]);
 const boardB = ref<Card[]>([]);
 const boardSizeModel = ref(4);
 const cardSets: Ref<CardSet[]> = ref(Object.values(sets));
+const autoRefresh = ref(true);
 const findSame = ref(true);
 const guess = ref<Card | null>(null);
 const images = computed(() => flattenSetList(cardSets.value));
@@ -48,6 +50,7 @@ watch([boardSize, cardSets, findSame], handleMakeBoard);
 
 const { onKey } = useKeys();
 onKey("Enter", handleMakeBoard);
+onKey("r", () => (autoRefresh.value = !autoRefresh.value));
 
 const {
   countdownRunning,
@@ -60,9 +63,9 @@ const {
 });
 
 const handleAnswer = (card: Card) => {
-  if (countdownRunning.value) return;
+  if (countdownRunning.value || guess.value) return;
   guess.value = card;
-  startCountdown();
+  if (autoRefresh.value) startCountdown();
 };
 
 onMounted(() => {
@@ -73,6 +76,10 @@ onMounted(() => {
 
 <template>
   <Tool container-class="same-container" :tool="tools.same">
+    <template #toolbar>
+      <v-btn :icon="mdiRefresh" @click="handleMakeBoard" />
+    </template>
+
     <template #tool-menu>
       <CardSetSelector v-model="cardSets" />
       <v-slider
@@ -81,6 +88,7 @@ onMounted(() => {
         :max="maxBoardSize"
         :min="minBoardSize"
       />
+      <v-switch v-model="autoRefresh" label="Automatically refresh" />
       <v-switch v-model="findSame" label="Find same" />
     </template>
 

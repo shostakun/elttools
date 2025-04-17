@@ -46,7 +46,10 @@ export const tools: Tool[] = [
     url: "/dice",
   },
   {
-    controls: [{ action: ["Enter"], result: "New board" }],
+    controls: [
+      { action: ["Enter"], result: "New board" },
+      { action: ["r"], result: "Toggle auto refresh" },
+    ],
     description: `Find the same picture on the left and right side of the board. Or, reverse it and find the different picture! Great as a filler.
 
 I recommend starting with 3x3 boards when explaining, then moving on to 4x4 boards.
