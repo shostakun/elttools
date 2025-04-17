@@ -11,7 +11,6 @@ declare module 'vue' {
     DiceCell: typeof import('./src/components/DiceCell.vue')['default']
     FontSelector: typeof import('./src/components/FontSelector.vue')['default']
     GlobalSettings: typeof import('./src/components/GlobalSettings.vue')['default']
-    HomeFAB: typeof import('./src/components/HomeFAB.vue')['default']
     Markdown: typeof import('./src/components/Markdown.vue')['default']
     PatternCell: typeof import('./src/components/PatternCell.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

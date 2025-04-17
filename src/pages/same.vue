@@ -72,19 +72,18 @@ onMounted(() => {
 </script>
 
 <template>
-  <HomeFAB />
-  <ToolMenu :tool="tools.same">
-    <CardSetSelector v-model="cardSets" />
-    <v-slider
-      v-model="boardSizeModel"
-      label="Board size"
-      :max="maxBoardSize"
-      :min="minBoardSize"
-    />
-    <v-switch v-model="findSame" label="Find same" />
-  </ToolMenu>
+  <Tool container-class="same-container" :tool="tools.same">
+    <template #tool-menu>
+      <CardSetSelector v-model="cardSets" />
+      <v-slider
+        v-model="boardSizeModel"
+        label="Board size"
+        :max="maxBoardSize"
+        :min="minBoardSize"
+      />
+      <v-switch v-model="findSame" label="Find same" />
+    </template>
 
-  <div class="same-page">
     <div>
       <h1 v-if="countdownRunning">
         New board in {{ countdownStepsRemaining }}...
@@ -121,10 +120,10 @@ onMounted(() => {
         </tr>
       </table>
     </div>
-  </div>
+  </Tool>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .board-container {
   align-items: center;
   display: flex;
@@ -139,14 +138,11 @@ onMounted(() => {
   }
 }
 
-.same-page {
+.same-container {
   align-items: center;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  height: 100%;
   justify-content: center;
-  position: relative;
-  width: 100%;
 }
 </style>

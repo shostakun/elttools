@@ -61,7 +61,7 @@ const letters = computed(() =>
 
 const chooseWords = (set: WordSet) => shuffle(set.words).slice(0, size ** 2);
 const wordCells = ref(chooseWords(selectedWords.value));
-const table = useTemplateRef("table");
+const table = useTemplateRef<HTMLTableElement, string>("table");
 const wordWidth = computed(() =>
   Math.max(
     ...wordCells.value.map((word) =>
@@ -171,20 +171,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <HomeFAB />
-  <ToolMenu :tool="tools.ticTacToe">
-    <v-select
-      v-model="selectedWords"
-      :items="wordSetOptions"
-      item-value="title"
-      label="Word set"
-      return-object
-    />
-    <v-switch v-model="maruStarts" :label="`${Player.maru} starts`" />
-    <v-switch v-model="limitMoves" label="Limit moves" />
-    <v-switch v-model="showNumbers" label="Show numbers" />
-  </ToolMenu>
-  <div class="tic-tac-toe-container">
+  <Tool container-class="tic-tac-toe-container" :tool="tools.ticTacToe">
+    <template #toolbar>
+      <v-btn :icon="mdiRefresh" @click="handleRefresh" />
+    </template>
+
+    <template #tool-menu>
+      <v-select
+        v-model="selectedWords"
+        :items="wordSetOptions"
+        item-value="title"
+        label="Word set"
+        return-object
+      />
+      <v-switch v-model="maruStarts" :label="`${Player.maru} starts`" />
+      <v-switch v-model="limitMoves" label="Limit moves" />
+      <v-switch v-model="showNumbers" label="Show numbers" />
+    </template>
+
     <div>{{ letters.join(", ") }}</div>
     <div class="tic-tac-toe-table-wrapper">
       <table ref="table">
@@ -211,14 +215,8 @@ onMounted(() => {
     <div class="tic-tac-toe-actions">
       <div v-if="winner">{{ winner }} wins!</div>
       <div v-else>It's {{ player }}'s turn.</div>
-      <v-btn color="primary" size="x-large" @click="handleRefresh">
-        <template #prepend>
-          <v-icon :icon="mdiRefresh" />
-        </template>
-        New Game
-      </v-btn>
     </div>
-  </div>
+  </Tool>
 </template>
 
 <style lang="scss">
@@ -234,11 +232,8 @@ onMounted(() => {
   flex-direction: column;
   font-size: 4rem;
   gap: 1rem;
-  height: 100%;
   justify-content: center;
   padding: 1rem 0;
-  position: relative;
-  width: 100%;
 
   & > * {
     flex: 0 0 auto;

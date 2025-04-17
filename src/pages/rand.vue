@@ -50,20 +50,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <HomeFAB />
-  <ToolMenu :tool="tools.randomNumber">
-    <v-range-slider
-      v-model="range"
-      label="Range"
-      :max="rangeRange.upper"
-      :min="rangeRange.lower"
-    />
-    <v-slider v-model="magnitude" label="Magnitude" max="10" min="1" />
-    <v-checkbox v-model="negative" density="compact" label="Negative" />
-  </ToolMenu>
-  <div class="rand-container" @click.prevent="handleRefresh">
-    <div :class="answerClass">{{ answer }}</div>
-  </div>
+  <Tool :tool="tools.randomNumber">
+    <template #tool-menu>
+      <v-range-slider
+        v-model="range"
+        label="Range"
+        :max="rangeRange.upper"
+        :min="rangeRange.lower"
+      />
+      <v-slider v-model="magnitude" label="Magnitude" max="10" min="1" />
+      <v-checkbox v-model="negative" density="compact" label="Negative" />
+    </template>
+
+    <div class="rand-container" @click.prevent="handleRefresh">
+      <div :class="answerClass">{{ answer }}</div>
+    </div>
+  </Tool>
 </template>
 
 <style scoped lang="scss">

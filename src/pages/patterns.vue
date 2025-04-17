@@ -75,40 +75,34 @@ const imageFor = (i: number) =>
 </script>
 
 <template>
-  <HomeFAB />
-  <v-fab
-    v-if="reveal"
-    absolute
-    app
-    icon
-    location="top center"
-    @click="handleChoosePattern"
-  >
-    <v-icon :icon="mdiRefresh" />
-  </v-fab>
-  <ToolMenu :tool="tools.patterns">
-    <CardSetSelector v-model="cardSet" />
-    <v-select
-      v-model="selectedDifficulties"
-      :items="difficultyOptions"
-      label="Difficulty"
-      multiple
-    >
-      <template #prepend-item>
-        <v-list-item title="Select All" @click="handleSelectAll">
-          <template #prepend>
-            <v-checkbox-btn
-              :indeterminate="!!selectedDifficulties.length && !allSelected"
-              :model-value="allSelected"
-            />
-          </template>
-        </v-list-item>
+  <Tool container-class="pattern-container" :tool="tools.patterns">
+    <template #toolbar>
+      <v-btn :icon="mdiRefresh" @click="handleChoosePattern" />
+    </template>
 
-        <v-divider class="mt-2"></v-divider>
-      </template>
-    </v-select>
-  </ToolMenu>
-  <div class="pattern-container">
+    <template #tool-menu>
+      <CardSetSelector v-model="cardSet" />
+      <v-select
+        v-model="selectedDifficulties"
+        :items="difficultyOptions"
+        label="Difficulty"
+        multiple
+      >
+        <template #prepend-item>
+          <v-list-item title="Select All" @click="handleSelectAll">
+            <template #prepend>
+              <v-checkbox-btn
+                :indeterminate="!!selectedDifficulties.length && !allSelected"
+                :model-value="allSelected"
+              />
+            </template>
+          </v-list-item>
+
+          <v-divider class="mt-2"></v-divider>
+        </template>
+      </v-select>
+    </template>
+
     <div class="pattern">
       <PatternCell
         v-for="i in hintLength + answerLength"
@@ -119,16 +113,13 @@ const imageFor = (i: number) =>
         @answered="handleAnswered"
       />
     </div>
-  </div>
+  </Tool>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .pattern-container {
   align-items: center;
   display: flex;
-  height: 100%;
-  position: relative;
-  width: 100%;
 }
 
 .pattern {
