@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { type Tool } from "@/types";
-import { mdiCogs, mdiInformation } from "@mdi/js";
+import { mdiInformation } from "@mdi/js";
 
 const { tool } = defineProps<{ tool: Tool }>();
 </script>
 
 <template>
-  <SettingsMenu>
+  <SettingsMenu global-settings>
     <slot />
 
     <template #panels>
@@ -20,11 +20,6 @@ const { tool } = defineProps<{ tool: Tool }>();
         v-if="tool.controls.length"
         :controls="tool.controls"
       />
-
-      <!-- Global settings -->
-      <SettingsMenuPanel :icon="mdiCogs" label="Global Settings">
-        <GlobalSettings />
-      </SettingsMenuPanel>
     </template>
   </SettingsMenu>
 </template>

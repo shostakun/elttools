@@ -77,33 +77,36 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <HomeFAB />
-  <v-fab absolute app icon location="top center" @click="handleRoll">
-    <v-icon :icon="mdiRefresh" />
-  </v-fab>
-  <ToolMenu :tool="tools.dice">
-    <CardSetSelector v-model="cardSets" />
-    <v-slider
-      v-model="n"
-      label="Number of choices"
-      :max="allCards.length"
-      min="2"
-    />
-  </ToolMenu>
-  <div ref="container" class="dice-container">
-    <div class="dice">
-      <div v-for="(row, j) in cards" :key="j" class="dice-row">
-        <DiceCell
-          v-for="(card, i) in row"
-          :key="`${card.id}-${roll}`"
-          :image="sample(card.images)"
-          :index="j * cols + i"
-          :value="values[j][i]"
-          :size="`${size}px`"
-        />
+  <Tool :tool="tools.dice">
+    <template #toolbar>
+      <v-btn :icon="mdiRefresh" @click="handleRoll" />
+    </template>
+
+    <template #tool-menu>
+      <CardSetSelector v-model="cardSets" />
+      <v-slider
+        v-model="n"
+        label="Number of choices"
+        :max="allCards.length"
+        min="2"
+      />
+    </template>
+
+    <div ref="container" class="dice-container">
+      <div class="dice">
+        <div v-for="(row, j) in cards" :key="j" class="dice-row">
+          <DiceCell
+            v-for="(card, i) in row"
+            :key="`${card.id}-${roll}`"
+            :image="sample(card.images)"
+            :index="j * cols + i"
+            :value="values[j][i]"
+            :size="`${size}px`"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </Tool>
 </template>
 
 <style lang="scss" scoped>

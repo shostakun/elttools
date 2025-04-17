@@ -55,31 +55,31 @@ onMounted(() => {
 </script>
 
 <template>
-  <HomeFAB />
-  <ToolMenu :tool="tools.randomColor">
-    <v-select
-      v-model="selectedColors"
-      :items="colorOptions"
-      item-title="label"
-      item-value="key"
-      label="Colors"
-      multiple
-    >
-      <template #prepend-item>
-        <v-list-item title="Select All" @click="handleSelectAll">
-          <template #prepend>
-            <v-checkbox-btn
-              :indeterminate="!!selectedColors.length && !allSelected"
-              :model-value="allSelected"
-            />
-          </template>
-        </v-list-item>
+  <Tool container-class="overflow-hidden" :tool="tools.randomColor">
+    <template #tool-menu>
+      <v-select
+        v-model="selectedColors"
+        :items="colorOptions"
+        item-title="label"
+        item-value="key"
+        label="Colors"
+        multiple
+      >
+        <template #prepend-item>
+          <v-list-item title="Select All" @click="handleSelectAll">
+            <template #prepend>
+              <v-checkbox-btn
+                :indeterminate="!!selectedColors.length && !allSelected"
+                :model-value="allSelected"
+              />
+            </template>
+          </v-list-item>
 
-        <v-divider class="mt-2"></v-divider>
-      </template>
-    </v-select>
-  </ToolMenu>
-  <div class="color-container" @click.prevent="handleRefresh">
+          <v-divider class="mt-2"></v-divider>
+        </template>
+      </v-select>
+    </template>
+
     <div v-if="countdownRunning" class="animation-container">
       <div
         v-for="(c, i) in colors"
@@ -92,8 +92,9 @@ onMounted(() => {
       v-else
       class="color-result"
       :style="{ backgroundColor: color.value }"
+      @click.prevent="handleRefresh"
     />
-  </div>
+  </Tool>
 </template>
 
 <style scoped>
@@ -108,13 +109,6 @@ onMounted(() => {
   height: calc(100vh / v-bind(size));
   position: relative;
   width: calc(100% / v-bind(size));
-}
-
-.color-container {
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
 }
 
 .color-result {

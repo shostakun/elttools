@@ -1,38 +1,75 @@
 <script setup lang="ts">
-import { mdiCogs } from "@mdi/js";
+import { mdiChevronDoubleRight, mdiCogs } from "@mdi/js";
+import { ref, useSlots } from "vue";
+
+const { globalSettings } = defineProps<{ globalSettings: boolean }>();
+const slots = useSlots();
+
+const drawer = ref(false);
+const openDrawer = () => (drawer.value = true);
 </script>
 
 <template>
-  <div class="tool-menu-container">
-    <v-expansion-panels>
-      <v-expansion-panel>
-        <v-expansion-panel-title>
-          <v-icon :icon="mdiCogs" />
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <!-- Relevant settings for the context -->
-          <slot />
+  <v-fab
+    v-if="!drawer"
+    absolute
+    app
+    icon
+    location="top right"
+    @click="openDrawer"
+    @mouseenter="openDrawer"
+  >
+    <v-icon :icon="mdiCogs" />
+  </v-fab>
 
-          <v-expansion-panels>
-            <slot name="panels" />
-          </v-expansion-panels>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-    </v-expansion-panels>
-  </div>
+  <v-navigation-drawer v-model="drawer" location="right" temporary width="400">
+    <v-list>
+      <v-list-item title="Settings">
+        <template #prepend>
+          <v-btn
+            :icon="mdiChevronDoubleRight"
+            variant="plain"
+            @click="drawer = false"
+          />
+        </template>
+      </v-list-item>
+    </v-list>
+
+    <v-divider v-if="slots.default" />
+
+    <div class="drawer-content">
+      <!-- Relevant settings for the context -->
+      <slot />
+
+      <v-expansion-panels
+        v-if="slots.panels"
+        class="drawer-panels"
+        variant="accordion"
+      >
+        <!-- Additional expansion panels -->
+        <slot name="panels" />
+      </v-expansion-panels>
+
+      <!-- Global settings -->
+      <v-expansion-panels
+        v-if="globalSettings"
+        class="drawer-panels"
+        variant="accordion"
+      >
+        <SettingsMenuPanel :icon="mdiCogs" label="Global Settings">
+          <GlobalSettings />
+        </SettingsMenuPanel>
+      </v-expansion-panels>
+    </div>
+  </v-navigation-drawer>
 </template>
 
-<style lang="scss">
-.sub-panel-title {
-  align-items: center;
-  display: flex;
-  gap: 0.5rem;
+<style lang="scss" scoped>
+.drawer-content {
+  padding: 1rem;
 }
 
-.tool-menu-container {
-  max-width: 400px;
-  position: absolute;
-  right: 0;
-  top: 0;
+.drawer-panels {
+  margin-top: 1rem;
 }
 </style>

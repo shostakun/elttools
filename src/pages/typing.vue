@@ -7,7 +7,7 @@ import { ANY_KEY, keyRelations, useKeys } from "@/utils/keys";
 import { randomStrings } from "@/utils/random";
 import { useSounds } from "@/utils/sound";
 import { randomWords } from "@/utils/words";
-import { mdiRefresh } from "@mdi/js";
+import { mdiChevronLeft, mdiChevronRight, mdiRefresh } from "@mdi/js";
 import classNames from "classnames";
 // @ts-expect-error No type declaration.
 import convertKeyEvent from "keysight";
@@ -23,7 +23,8 @@ const overrideFont = ref(true);
 const selectedFont = ref('"Atkinson Hyperlegible Mono"');
 
 interface Level {
-  home?: string[];
+  home: string[];
+  index: number;
   new: string[];
   old: string[];
   review?: boolean;
@@ -32,10 +33,10 @@ interface Level {
 
 let previous: string[] = [];
 const levels: Level[] = [
-  { new: [" ", "f", "j"], home: [] },
-  { new: ["d", "k"], home: [] },
-  { new: ["s", "l"], home: [] },
-  { new: ["a", ";"], home: [] },
+  { new: [" ", "f", "j"] },
+  { new: ["d", "k"] },
+  { new: ["s", "l"] },
+  { new: ["a", ";"] },
   { new: ["g", "h"], home: ["f", "j"] },
   { review: true, new: " asdfghjkl;".split(""), old: [] },
   { new: ["r", "u"], home: ["f", "j"] },
@@ -98,12 +99,14 @@ const levels: Level[] = [
       "",
     ),
   },
-].map((level: Partial<Level>) => {
+].map((level: Partial<Level>, i) => {
   // Insert previously-studied levels if needed.
+  level.index = i;
+  if (!level.home) level.home = [];
   if (!level.old) {
     level.old = previous
-      .filter((key) => !level.home?.includes(key))
-      .concat(level.home ?? []);
+      .filter((key) => !level.home!.includes(key))
+      .concat(level.home);
     previous = previous.concat(level.new!);
   }
   return level as Level;
@@ -118,15 +121,16 @@ const levelOptions = levels.map((level, i) => ({
   value: level,
 }));
 
+const handleNextLevel = () =>
+  (selectedLevel.value =
+    levels[Math.min(levels.length - 1, selectedLevel.value.index + 1)]);
+const handlePreviousLevel = () =>
+  (selectedLevel.value = levels[Math.max(0, selectedLevel.value.index - 1)]);
+
 const makePractice = (level: Level) => {
   let target = randomStrings(level.new, 2, includeCapitals.value);
   target +=
-    " " +
-    randomStrings(
-      (level.home ?? []).concat(level.new),
-      4,
-      includeCapitals.value,
-    );
+    " " + randomStrings(level.home.concat(level.new), 4, includeCapitals.value);
   target +=
     " " +
     randomStrings(
@@ -262,17 +266,32 @@ onKey(ANY_KEY, (event) => {
 </script>
 
 <template>
-  <HomeFAB />
-  <v-fab absolute app icon location="top center" @click="makeTarget">
-    <v-icon :icon="mdiRefresh" />
-  </v-fab>
-  <ToolMenu :tool="tools.typing">
-    <v-select v-model="selectedLevel" :items="levelOptions" label="Level" />
-    <v-switch v-model="includeCapitals" label="Include capitals" />
-    <v-switch v-model="overrideFont" label="Override font" />
-    <FontSelector v-model="selectedFont" :disabled="!overrideFont" />
-  </ToolMenu>
-  <div class="typing-container">
+  <Tool container-class="typing-container" :tool="tools.typing">
+    <template #toolbar>
+      <v-btn-group rounded="pill">
+        <v-btn
+          :disabled="selectedLevel.index < 1"
+          :icon="mdiChevronLeft"
+          @click="handlePreviousLevel"
+        />
+        <v-btn :icon="mdiRefresh" @click="makeTarget" />
+        <v-btn
+          :disabled="selectedLevel.index >= levels.length - 1"
+          :icon="mdiChevronRight"
+          @click="handleNextLevel"
+        />
+      </v-btn-group>
+    </template>
+
+    <template #tool-menu>
+      <v-select v-model="selectedLevel" :items="levelOptions" label="Level" />
+      <v-switch v-model="includeCapitals" label="Include capitals" />
+      <div class="control-row">
+        <v-switch v-model="overrideFont" label="Override font" />
+        <FontSelector v-model="selectedFont" :disabled="!overrideFont" />
+      </div>
+    </template>
+
     <div
       class="typing-area"
       :style="overrideFont ? { fontFamily: selectedFont } : {}"
@@ -291,17 +310,23 @@ onKey(ANY_KEY, (event) => {
         }}</span
       >
     </div>
+
     <div :class="classNames('typing-stats', { 'typing-running': running })">
       <Timer ref="timer" :running="running" /> |
       <span>{{ score }}%</span>
     </div>
-  </div>
+  </Tool>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
+.control-row {
+  display: flex;
+  gap: 1rem;
+}
+
 .typing-area {
   font-size: 2.5em;
-  max-width: 600px;
+  max-width: 700px;
   position: relative;
   text-align: center;
 }
@@ -311,11 +336,8 @@ onKey(ANY_KEY, (event) => {
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  height: 100%;
   justify-content: center;
   padding: 1rem;
-  position: relative;
-  width: 100%;
 }
 
 .typing-cursor {

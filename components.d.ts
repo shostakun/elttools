@@ -21,6 +21,7 @@ declare module 'vue' {
     SettingsMenuPanel: typeof import('./src/components/SettingsMenuPanel.vue')['default']
     ThemeProvider: typeof import('./src/components/ThemeProvider.vue')['default']
     Timer: typeof import('./src/components/Timer.vue')['default']
+    Tool: typeof import('./src/components/Tool.vue')['default']
     ToolListCard: typeof import('./src/components/ToolListCard.vue')['default']
     ToolMenu: typeof import('./src/components/ToolMenu.vue')['default']
     ToolMenuControlsPanel: typeof import('./src/components/ToolMenuControlsPanel.vue')['default']
