@@ -65,7 +65,9 @@ You can select the card sets you want to include. Just make sure to choose enoug
   },
   {
     controls: [{ action: ["Enter"], result: "Shuffle" }],
-    description: `Put a set of cards in order. Great for comparatives.`,
+    description: `Put a set of cards in order. Great for comparatives and sequencing (e.g. daily routines).
+
+Set the **start label** and **end label** to make it clear what to do to students.`,
     id: "ordering",
     title: "Ordering",
     thumbnail: OrderingThumb,

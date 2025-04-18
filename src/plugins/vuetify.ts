@@ -21,6 +21,9 @@ export default createVuetify({
       hideDetails: true,
       inset: true,
     },
+    VTextField: {
+      variant: "solo",
+    },
   },
   icons: {
     defaultSet: "mdi",

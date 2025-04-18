@@ -29,6 +29,9 @@ const { onKey } = useKeys();
 onKey("Enter", handleShuffle);
 onMounted(handleShuffle);
 
+const startLabel = ref("");
+const endLabel = ref("");
+
 const list = ref<Array<{ card: Card; id: number }>>([]);
 watch(
   cards,
@@ -44,9 +47,12 @@ watch(
 
     <template #tool-menu>
       <CardSetSelector v-model="cardSet" />
+      <v-text-field v-model="startLabel" label="Start label" suffix="→" />
+      <v-text-field v-model="endLabel" label="End label" prefix="→" />
     </template>
 
     <div ref="sizer" class="ordering-sizer">
+      <div v-if="startLabel" class="ordering-label">{{ startLabel }} →</div>
       <draggable v-model="list" class="ordering-sortable" item-key="id">
         <template #item="{ element: { card } }">
           <OrderingCell
@@ -56,11 +62,23 @@ watch(
           />
         </template>
       </draggable>
+      <div v-if="endLabel" class="ordering-label ordering-label-end">
+        → {{ endLabel }}
+      </div>
     </div>
   </Tool>
 </template>
 
 <style lang="scss">
+.ordering-label {
+  align-self: flex-start;
+  font-size: 3rem;
+}
+
+.ordering-label-end {
+  align-self: flex-end;
+}
+
 .ordering-sizer {
   align-items: center;
   display: flex;
