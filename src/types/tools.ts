@@ -1,5 +1,7 @@
 import DiceThumb from "@/assets/thumbnails/dice.png";
 import DiceThumbDark from "@/assets/thumbnails/dice-dark.png";
+import OrderingThumb from "@/assets/thumbnails/ordering.png";
+import OrderingThumbDark from "@/assets/thumbnails/ordering-dark.png";
 import PatternThumb from "@/assets/thumbnails/patterns.png";
 import PatternThumbDark from "@/assets/thumbnails/patterns-dark.png";
 import RandomColorThumb from "@/assets/thumbnails/random-color.png";
@@ -62,6 +64,25 @@ You can select the card sets you want to include. Just make sure to choose enoug
     url: "/same",
   },
   {
+    controls: [{ action: ["Enter"], result: "Shuffle" }],
+    description: `Put a set of cards in order. Great for comparatives.`,
+    id: "ordering",
+    title: "Ordering",
+    thumbnail: OrderingThumb,
+    thumbnailDark: OrderingThumbDark,
+    url: "/ordering",
+  },
+  {
+    controls: [{ action: ["Enter"], result: "New pattern" }],
+    description:
+      "Easy hidden patterns. Students must remember the pattern and figure out what comes next. Great for practicing vocabulary.",
+    id: "patterns",
+    title: "Patterns",
+    thumbnail: PatternThumb,
+    thumbnailDark: PatternThumbDark,
+    url: "/patterns",
+  },
+  {
     controls: [
       { action: ["Enter"], result: "New game" },
       { action: ["1-9"], result: "Play in the corresponding square" },
@@ -76,16 +97,6 @@ The is also **limit move** mode for older students who might be bored by Tic-Tac
     thumbnail: TicTacToeThumb,
     thumbnailDark: TicTacToeThumbDark,
     url: "/tictactoe",
-  },
-  {
-    controls: [{ action: ["Enter"], result: "New pattern" }],
-    description:
-      "Easy hidden patterns. Students must remember the pattern and figure out what comes next. Great for practicing vocabulary.",
-    id: "patterns",
-    title: "Patterns",
-    thumbnail: PatternThumb,
-    thumbnailDark: PatternThumbDark,
-    url: "/patterns",
   },
   {
     controls: [

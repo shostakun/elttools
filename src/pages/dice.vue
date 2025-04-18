@@ -3,16 +3,10 @@ import { defaultSet } from "@/assets/cards";
 import { flattenSetList } from "@/types/cards";
 import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
+import { useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
 import { chunk, sample, shuffle } from "lodash";
-import {
-  computed,
-  onMounted,
-  onUnmounted,
-  ref,
-  useTemplateRef,
-  watch,
-} from "vue";
+import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 
 const n = ref(6);
 const cols = ref(n.value);
@@ -38,6 +32,7 @@ const handleResize = () => {
     );
   }
 };
+useResize(handleResize);
 
 const cardSets = ref([defaultSet]);
 const allCards = computed(() => flattenSetList(cardSets.value));
@@ -60,20 +55,10 @@ const handleRoll = () => {
   chosenValues.value = chooseValues();
   handleResize();
 };
-
 watch([cardSets, n], handleRoll);
-
 const { onKey } = useKeys();
 onKey("Enter", handleRoll);
-
-onMounted(() => {
-  handleRoll();
-  window.addEventListener("resize", handleResize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("resize", handleResize);
-});
+onMounted(handleRoll);
 </script>
 
 <template>

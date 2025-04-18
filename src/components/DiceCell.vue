@@ -50,6 +50,7 @@ onKey((index + 1).toString(), handleShowClick);
 
 .dice-target {
   align-items: center;
+  cursor: pointer;
   display: flex;
   font-size: 8rem;
   height: 100%;
