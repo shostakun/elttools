@@ -98,7 +98,7 @@ onUnmounted(() => {
           <DiceCell
             v-for="(card, i) in row"
             :key="`${card.id}-${roll}`"
-            :image="sample(card.images)"
+            :image="sample(card.images)!"
             :index="j * cols + i"
             :value="values[j][i]"
             :size="`${size}px`"

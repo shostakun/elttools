@@ -2,7 +2,7 @@
 import { mdiChevronDoubleRight, mdiCogs } from "@mdi/js";
 import { ref, useSlots } from "vue";
 
-const { globalSettings } = defineProps<{ globalSettings: boolean }>();
+const { globalSettings } = defineProps<{ globalSettings?: boolean }>();
 const slots = useSlots();
 
 const drawer = ref(false);
