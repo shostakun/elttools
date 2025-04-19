@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 import cog
 
@@ -21,11 +22,17 @@ def gen_card_imports(files):
 
 
 def gen_card_specs(files, tags):
+    groups = {}
     for f in files:
-        fId = camel_case(f)
-        cog.outl(f"  {fId}: {{")
-        cog.outl(f"    images: [{fId}Card],")
-        my_tags = tags + [f.replace("_", " ")]
+        gId = re.sub(r"\d+$", "", f)
+        if gId not in groups:
+            groups[gId] = []
+        groups[gId].append(f)
+    for gId, group in groups.items():
+        cog.outl(f"  {camel_case(gId)}: {{")
+        images = [camel_case(f) + "Card" for f in group]
+        cog.outl(f"    images: [{', '.join(images)}],")
+        my_tags = tags + [gId.replace("_", " ")]
         my_tags.sort()
         # Use JSON to get double quotes.
         cog.outl(f"    tags: {json.dumps(my_tags)},")
