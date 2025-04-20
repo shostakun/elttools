@@ -1,7 +1,8 @@
 // [[[cog from gen_cards import *; files = get_card_files(); gen_card_imports(files)]]]
-import countCard from "./count.png";
 import danceCard from "./dance.png";
+import ennumerateCard from "./ennumerate.png";
 import jumpCard from "./jump.png";
+import listenCard from "./listen.png";
 import listen2Card from "./listen2.png";
 import playCard from "./play.png";
 import play2Card from "./play2.png";
@@ -17,20 +18,20 @@ import { makeCards, makeSet } from "@/utils/cards";
 
 const imageMap = {
   // [[[cog gen_card_specs(files, ["action", "anime", "set 1", "verb"])]]]
-  count: {
-    images: [countCard],
-    tags: ["action", "anime", "count", "set 1", "verb"],
-  },
   dance: {
     images: [danceCard],
     tags: ["action", "anime", "dance", "set 1", "verb"],
+  },
+  ennumerate: {
+    images: [ennumerateCard],
+    tags: ["action", "anime", "ennumerate", "set 1", "verb"],
   },
   jump: {
     images: [jumpCard],
     tags: ["action", "anime", "jump", "set 1", "verb"],
   },
   listen: {
-    images: [listen2Card],
+    images: [listenCard, listen2Card],
     tags: ["action", "anime", "listen", "set 1", "verb"],
   },
   play: {
