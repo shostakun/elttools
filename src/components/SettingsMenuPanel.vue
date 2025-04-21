@@ -5,7 +5,7 @@ const { icon, label } = defineProps<{ icon: string; label: string }>();
 <template>
   <v-expansion-panel>
     <v-expansion-panel-title class="sub-panel-title">
-      <v-icon :icon="icon" />
+      <v-icon :icon="icon" class="mr-1" />
       {{ label }}
     </v-expansion-panel-title>
     <v-expansion-panel-text>

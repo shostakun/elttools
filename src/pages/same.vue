@@ -12,7 +12,12 @@ const answers = ref<Card[]>([]);
 const boardA = ref<Card[]>([]);
 const boardB = ref<Card[]>([]);
 const boardSizeModel = ref(4);
-const cardSets: Ref<CardSet[]> = ref(Object.values(sets));
+const cardSets: Ref<CardSet[]> = ref(
+  Object.values(sets).filter(
+    // By default, only include nouns that don't have backgrounds.
+    (set) => set.tags.includes("noun") && !set.tags.includes("background"),
+  ),
+);
 const autoRefresh = ref(true);
 const findSame = ref(true);
 const guess = ref<Card | null>(null);
@@ -88,7 +93,17 @@ onMounted(() => {
         :max="maxBoardSize"
         :min="minBoardSize"
       />
-      <v-switch v-model="autoRefresh" label="Automatically refresh" />
+      <v-tooltip
+        text="Generate a new board after answering? Use the `r` key to toggle."
+      >
+        <template #activator="{ props }">
+          <v-switch
+            v-model="autoRefresh"
+            v-bind="props"
+            label="Automatically refresh"
+          />
+        </template>
+      </v-tooltip>
       <v-switch v-model="findSame" label="Find same" />
     </template>
 
@@ -115,6 +130,7 @@ onMounted(() => {
           />
         </tr>
       </table>
+      <v-divider inset thickness="3" vertical />
       <table>
         <tr v-for="row in boardSize" :key="row">
           <SameImageCell
@@ -135,7 +151,7 @@ onMounted(() => {
 .board-container {
   align-items: center;
   display: flex;
-  gap: 5rem;
+  gap: 3rem;
   justify-content: center;
   position: relative;
   width: 100%;

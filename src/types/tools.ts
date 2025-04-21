@@ -40,9 +40,11 @@ export const tools: Tool[] = [
           "Reveal the number in corresponding square (reading left to right, top to bottom)",
       },
     ],
-    description: `A replacement for rolling dice. Students choose one of the cards. Click the card to reveal a number. Good way to get a little extra vocab practice in while playing a game.`,
+    description: `A replacement for rolling dice. Students choose one of the cards. Click the card to reveal a number. Good way to get a little extra vocab practice in while playing a game.
+
+Can also be used as story dice. After each roll, students make up a sentence or short story using all the words shown. I start with 2 cards and increase according to the students' ability.`,
     id: "dice",
-    title: "Dice",
+    title: "Dice / Story Dice",
     thumbnail: DiceThumb,
     thumbnailDark: DiceThumbDark,
     url: "/dice",
@@ -52,9 +54,11 @@ export const tools: Tool[] = [
       { action: ["Enter"], result: "New board" },
       { action: ["r"], result: "Toggle auto refresh" },
     ],
-    description: `Find the same picture on the left and right side of the board. Or, reverse it and find the different picture! Great as a filler.
+    description: `Super fun warmup or filler. Find the same picture on the left and right side of the board. Or, reverse it and find the different picture!
 
 I recommend starting with 3x3 boards when explaining, then moving on to 4x4 boards.
+
+To stop the activity, I use the 'r' key to turn off the countdown that generates a new board.
 
 You can select the card sets you want to include. Just make sure to choose enough cards for the board size you want!`,
     id: "same",
