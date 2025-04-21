@@ -319,11 +319,6 @@ onKey(ANY_KEY, (event) => {
 </template>
 
 <style lang="scss">
-.control-row {
-  display: flex;
-  gap: 1rem;
-}
-
 .typing-area {
   font-size: 2.5em;
   max-width: 700px;

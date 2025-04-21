@@ -1,3 +1,5 @@
+import CardThumb from "@/assets/thumbnails/card.png";
+import CardThumbDark from "@/assets/thumbnails/card-dark.png";
 import DiceThumb from "@/assets/thumbnails/dice.png";
 import DiceThumbDark from "@/assets/thumbnails/dice-dark.png";
 import OrderingThumb from "@/assets/thumbnails/ordering.png";
@@ -31,6 +33,37 @@ export interface Tool {
 }
 
 export const tools: Tool[] = [
+  {
+    controls: [
+      { action: ["Enter"], result: "Refresh" },
+      { action: ["Escape"], result: "Deselect card" },
+      { action: ["Spacebar"], result: "Toggle between one and all cards" },
+      {
+        action: ["1-9"],
+        result:
+          "Select the corresponding card (reading left to right, top to bottom)",
+      },
+      { action: ["d"], result: "Toggle demonstrative character" },
+      { action: ["f"], result: "Show female demonstrative character" },
+      { action: ["m"], result: "Show male demonstrative character" },
+      { action: ["n"], result: 'Show "no" image' },
+      { action: ["p"], result: "Toggle polarity (yes/no) image" },
+      { action: ["y"], result: 'Show "yes" image' },
+    ],
+    description: `Start here. Show images from a selected set of cards. I use this to introduce and review vocab, as well as to practice various grammar points.
+
+*Why can't I see the answer?* Because the answer depends on context. For a single card, the answer could be "an apple", "This is an apple.", "I like apples.", etc. When necessary, I write the answer on a whiteboard or in Zoom screen annotations.
+
+#### Other ideas:
+- Show all the cards in a set (e.g. animals). Start telling a story ("One day, I want swimming with a ____"). Elicit suggestions from the students. Then press the space bar to choose the continuation of the story ("One day, I went swimming with a moose.).
+- Show the demonstrative character (with the \`d\` key) and make sentences using "this"/"that"/"these"/"those".
+- Combine the demonstrative character with polarity (yes/no; the \`p\` key) to make sentences like: "She (doesn't) like strawberries.`,
+    id: "cards",
+    title: "Flash Cards",
+    thumbnail: CardThumb,
+    thumbnailDark: CardThumbDark,
+    url: "/cards",
+  },
   {
     controls: [
       { action: ["Enter"], result: "Roll" },

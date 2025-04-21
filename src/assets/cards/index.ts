@@ -23,4 +23,4 @@ export const sets: Record<string, CardSet> = {
   // [[[end]]]
 };
 
-export const defaultSet = kenneySets.kenneyZooAnimals;
+export const defaultSet = foodSets.fruit;

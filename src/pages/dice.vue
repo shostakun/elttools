@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { defaultSet } from "@/assets/cards";
-import { flattenSetList } from "@/types/cards";
+import { CardTileAction, flattenSetList } from "@/types/cards";
 import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
 import { useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
-import { chunk, sample, shuffle } from "lodash";
+import { chunk, shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 
 const n = ref(6);
@@ -47,10 +47,15 @@ const chosenCards = ref(chooseCards());
 const cards = computed(() => chunk(chosenCards.value, cols.value));
 const chosenValues = ref(chooseValues());
 const values = computed(() => chunk(chosenValues.value, cols.value));
-const roll = ref(0);
+
+const selectedCard = ref("");
+const handleSelected = (value?: string) => {
+  if (value) selectedCard.value = value;
+};
+const handleDeselect = () => (selectedCard.value = "");
 
 const handleRoll = () => {
-  roll.value++;
+  handleDeselect();
   chosenCards.value = chooseCards();
   chosenValues.value = chooseValues();
   handleResize();
@@ -80,14 +85,21 @@ onMounted(handleRoll);
     <div ref="container" class="dice-container">
       <div class="dice">
         <div v-for="(row, j) in cards" :key="j" class="dice-row">
-          <DiceCell
+          <CardTile
             v-for="(card, i) in row"
-            :key="`${card.id}-${roll}`"
-            :image="sample(card.images)!"
-            :index="j * cols + i"
-            :value="values[j][i]"
+            :key="card.id"
+            :action="CardTileAction.overlay"
+            :hotkey="(j * cols + i).toString()"
+            :image="card.images[0]"
+            :selected="selectedCard === card.id"
             :size="`${size}px`"
-          />
+            :value="card.id"
+            @selected="handleSelected"
+          >
+            <template #overlay>
+              <span class="dice-overlay">{{ values[j][i] }}</span>
+            </template>
+          </CardTile>
         </div>
       </div>
     </div>
@@ -110,6 +122,11 @@ onMounted(handleRoll);
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.dice-overlay {
+  font-size: 8rem;
+  -webkit-text-stroke: 3px rgb(var(--v-theme-background));
 }
 
 .dice-row {

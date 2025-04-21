@@ -73,3 +73,11 @@ const openDrawer = () => (drawer.value = true);
   margin-top: 1rem;
 }
 </style>
+
+<style lang="scss">
+// Common classes for the settings menu.
+.control-row {
+  display: flex;
+  gap: 1rem;
+}
+</style>

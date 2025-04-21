@@ -8,7 +8,7 @@ export {};
 declare module 'vue' {
   export interface GlobalComponents {
     CardSetSelector: typeof import('./src/components/CardSetSelector.vue')['default']
-    DiceCell: typeof import('./src/components/DiceCell.vue')['default']
+    CardTile: typeof import('./src/components/CardTile.vue')['default']
     FontSelector: typeof import('./src/components/FontSelector.vue')['default']
     GlobalSettings: typeof import('./src/components/GlobalSettings.vue')['default']
     Markdown: typeof import('./src/components/Markdown.vue')['default']
