@@ -14,46 +14,46 @@ import { type CardSet } from "@/types/cards";
 import { makeCards, makeSet } from "@/utils/cards";
 
 const imageMap = {
-  // [[[cog gen_card_specs(files, ["anime", "fruit", "one"])]]]
+  // [[[cog gen_card_specs(files, ["fruit", "noun", "singular"])]]]
   apple: {
     images: [appleCard],
-    tags: ["anime", "apple", "fruit", "one"],
+    tags: ["apple", "fruit", "noun", "singular"],
   },
   banana: {
     images: [bananaCard],
-    tags: ["anime", "banana", "fruit", "one"],
+    tags: ["banana", "fruit", "noun", "singular"],
   },
   canteloupe: {
     images: [canteloupeCard],
-    tags: ["anime", "canteloupe", "fruit", "one"],
+    tags: ["canteloupe", "fruit", "noun", "singular"],
   },
   kiwi: {
     images: [kiwiCard],
-    tags: ["anime", "fruit", "kiwi", "one"],
+    tags: ["fruit", "kiwi", "noun", "singular"],
   },
   orange: {
     images: [orangeCard],
-    tags: ["anime", "fruit", "one", "orange"],
+    tags: ["fruit", "noun", "orange", "singular"],
   },
   peach: {
     images: [peachCard],
-    tags: ["anime", "fruit", "one", "peach"],
+    tags: ["fruit", "noun", "peach", "singular"],
   },
   pear: {
     images: [pearCard],
-    tags: ["anime", "fruit", "one", "pear"],
+    tags: ["fruit", "noun", "pear", "singular"],
   },
   pineapple: {
     images: [pineappleCard],
-    tags: ["anime", "fruit", "one", "pineapple"],
+    tags: ["fruit", "noun", "pineapple", "singular"],
   },
   strawberry: {
     images: [strawberryCard],
-    tags: ["anime", "fruit", "one", "strawberry"],
+    tags: ["fruit", "noun", "singular", "strawberry"],
   },
   watermelon: {
     images: [watermelonCard],
-    tags: ["anime", "fruit", "one", "watermelon"],
+    tags: ["fruit", "noun", "singular", "watermelon"],
   },
   // [[[end]]]
 } as const;
@@ -63,5 +63,5 @@ export const images = makeCards(imageMap);
 export const imageList = Object.values(images);
 
 export const sets: Record<string, CardSet> = {
-  ...makeSet(imageList, "fruit", ["fruit", "one"]),
+  ...makeSet(imageList, "fruit", ["fruit", "noun", "singular"]),
 };

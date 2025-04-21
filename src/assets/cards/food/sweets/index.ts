@@ -7,18 +7,18 @@ import { type CardSet } from "@/types/cards";
 import { makeCards, makeSet } from "@/utils/cards";
 
 const imageMap = {
-  // [[[cog gen_card_specs(files, ["anime", "dessert", "sweets"])]]]
+  // [[[cog gen_card_specs(files, ["dessert", "noun", "sweets"])]]]
   cake: {
     images: [cakeCard],
-    tags: ["anime", "cake", "dessert", "sweets"],
+    tags: ["cake", "dessert", "noun", "sweets"],
   },
   iceCream: {
     images: [iceCreamCard],
-    tags: ["anime", "dessert", "ice cream", "sweets"],
+    tags: ["dessert", "ice cream", "noun", "sweets"],
   },
   pie: {
     images: [pieCard],
-    tags: ["anime", "dessert", "pie", "sweets"],
+    tags: ["dessert", "noun", "pie", "sweets"],
   },
   // [[[end]]]
 } as const;

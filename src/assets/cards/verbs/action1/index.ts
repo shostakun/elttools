@@ -17,46 +17,46 @@ import { type CardSet } from "@/types/cards";
 import { makeCards, makeSet } from "@/utils/cards";
 
 const imageMap = {
-  // [[[cog gen_card_specs(files, ["action", "anime", "set 1", "verb"])]]]
+  // [[[cog gen_card_specs(files, ["action", "set 1", "verb"])]]]
   dance: {
     images: [danceCard],
-    tags: ["action", "anime", "dance", "set 1", "verb"],
+    tags: ["action", "dance", "set 1", "verb"],
   },
   ennumerate: {
     images: [ennumerateCard],
-    tags: ["action", "anime", "ennumerate", "set 1", "verb"],
+    tags: ["action", "ennumerate", "set 1", "verb"],
   },
   jump: {
     images: [jumpCard],
-    tags: ["action", "anime", "jump", "set 1", "verb"],
+    tags: ["action", "jump", "set 1", "verb"],
   },
   listen: {
     images: [listenCard, listen2Card],
-    tags: ["action", "anime", "listen", "set 1", "verb"],
+    tags: ["action", "listen", "set 1", "verb"],
   },
   play: {
     images: [playCard, play2Card],
-    tags: ["action", "anime", "play", "set 1", "verb"],
+    tags: ["action", "play", "set 1", "verb"],
   },
   read: {
     images: [readCard],
-    tags: ["action", "anime", "read", "set 1", "verb"],
+    tags: ["action", "read", "set 1", "verb"],
   },
   run: {
     images: [runCard],
-    tags: ["action", "anime", "run", "set 1", "verb"],
+    tags: ["action", "run", "set 1", "verb"],
   },
   sing: {
     images: [singCard],
-    tags: ["action", "anime", "set 1", "sing", "verb"],
+    tags: ["action", "set 1", "sing", "verb"],
   },
   walk: {
     images: [walkCard, walk2Card],
-    tags: ["action", "anime", "set 1", "verb", "walk"],
+    tags: ["action", "set 1", "verb", "walk"],
   },
   write: {
     images: [writeCard],
-    tags: ["action", "anime", "set 1", "verb", "write"],
+    tags: ["action", "set 1", "verb", "write"],
   },
   // [[[end]]]
 } as const;
