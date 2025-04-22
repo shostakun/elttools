@@ -70,7 +70,7 @@ onMounted(handleRoll);
             :hotkey="(j * cols + i).toString()"
             :image="card.images[0]"
             :selected="selectedCard === card.id"
-            :size="`${size}px`"
+            :size="size"
             :value="card.id"
             @selected="handleSelected"
           >

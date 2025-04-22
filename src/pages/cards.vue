@@ -145,7 +145,7 @@ onMounted(handleRoll);
             :image="sample(card.images)!"
             :index="j * cols + i"
             :selected="selectedCard === card.id"
-            :size="`${size}px`"
+            :size="size"
             :value="card.id"
             @selected="handleSelected"
           />

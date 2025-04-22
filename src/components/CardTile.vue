@@ -2,23 +2,37 @@
 import type { CardTileAction, CardTileDensity } from "@/types/cards";
 import { useKeys } from "@/utils/keys";
 import classNames from "classnames";
+import { computed, ref } from "vue";
 
-const { action, density, image, hotkey, selected, size, value } = defineProps<{
+const props = defineProps<{
   action?: CardTileAction;
   density?: CardTileDensity;
   hotkey?: string | string[];
   image: string;
   selected?: boolean;
-  size: string;
+  size: string | number;
   value?: T;
 }>();
 
-const emit = defineEmits<{ selected: [value?: T] }>();
+const sizeStr = computed(() =>
+  typeof props.size === "string" ? props.size : `${props.size}px`,
+);
 
+const emit = defineEmits<{ selected: [value?: T] }>();
 const handleSelect = () => {
-  emit("selected", value);
+  if (!props.selected) emit("selected", props.value);
 };
 
+const highlighted = computed(
+  () => props.selected && props.action === "highlight",
+);
+
+const hovered = ref(false);
+const handleEndHover = () => (hovered.value = false);
+const handleStartHover = () => (hovered.value = props.action === "showOnHover");
+const hidden = computed(() => props.action === "showOnHover" && !hovered.value);
+
+const { hotkey } = props;
 const { onKey } = useKeys();
 if (hotkey) onKey(hotkey, handleSelect);
 </script>
@@ -30,27 +44,25 @@ if (hotkey) onKey(hotkey, handleSelect);
         'card-high-density': density === 'high',
       })
     "
-    :style="{ height: size, width: size }"
+    :style="{ height: sizeStr, width: sizeStr }"
   >
     <div
       :class="
         classNames('card-background', {
-          'card-highlight': selected && action === 'highlight',
+          'card-hidden': hidden,
+          'card-highlight': highlighted,
           'card-high-density': density === 'high',
         })
       "
       @click.prevent.stop="handleSelect"
+      @mouseenter="handleStartHover"
+      @mousedown="handleStartHover"
+      @mouseleave="handleEndHover"
+      @mouseup="handleEndHover"
     >
       <v-img class="card-image" :src="image" />
     </div>
-    <div
-      v-if="action === 'overlay'"
-      class="card-overlay"
-      :style="{
-        opacity: selected ? 1 : 0,
-      }"
-      @click.prevent.stop="handleSelect"
-    >
+    <div v-if="action === 'overlay' && selected" class="card-overlay">
       <slot name="overlay">
         {{ value }}
       </slot>
@@ -70,7 +82,7 @@ if (hotkey) onKey(hotkey, handleSelect);
 
 .card-background {
   align-items: center;
-  background-color: #88888844;
+  background-color: var(--elt-neutral-background);
   border-radius: 0.5rem;
   cursor: pointer;
   display: flex;
@@ -78,6 +90,15 @@ if (hotkey) onKey(hotkey, handleSelect);
   padding: 1rem;
   position: relative;
   width: 100%;
+
+  &.card-hidden {
+    background-color: unset;
+    border: 0.25rem dashed var(--elt-neutral-background);
+
+    & > * {
+      display: none;
+    }
+  }
 
   &.card-highlight {
     background-color: lightblue;

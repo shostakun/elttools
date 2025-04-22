@@ -55,7 +55,7 @@ watch(
             :key="card.id"
             density="high"
             :image="card.images[0]"
-            :size="`${size}px`"
+            :size="size"
           />
         </template>
       </draggable>

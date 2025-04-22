@@ -8,9 +8,9 @@ export const fontOptions = [
 
 export const getGlobalFont = () => {
   const rootStyles = getComputedStyle(document.documentElement);
-  const font = rootStyles.getPropertyValue("--v-font-family").trim();
+  const font = rootStyles.getPropertyValue("--elt-font-family").trim();
   return fontOptions.find(({ value }) => value === font) ? font : DEFAULT_FONT;
 };
 
 export const setGlobalFont = (font: string) =>
-  document.documentElement.style.setProperty("--v-font-family", font);
+  document.documentElement.style.setProperty("--elt-font-family", font);

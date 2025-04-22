@@ -25,7 +25,7 @@ export type CardSetMap = Record<string, CardSet>;
 export const flattenSetList = (sets: CardSet[]): Card[] =>
   uniqBy(sets.map((s) => s.cards).flat(), "id");
 
-export type CardTileAction = "highlight" | "overlay";
+export type CardTileAction = "highlight" | "overlay" | "showOnHover";
 
 export type CardTileDensity = "normal" | "high";
 

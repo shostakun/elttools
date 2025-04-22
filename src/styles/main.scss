@@ -1,6 +1,6 @@
 @use "vuetify" with (
-  $body-font-family: var(--v-font-family),
-  $heading-font-family: var(--v-font-family)
+  $body-font-family: var(--elt-font-family),
+  $heading-font-family: var(--elt-font-family)
 );
 
 @import url("https://fonts.googleapis.com/css2?family=Alata&family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap");
@@ -10,7 +10,8 @@
 }
 
 :root {
-  --v-font-family: "Alata";
+  --elt-neutral-background: #88888844;
+  --elt-font-family: "Alata";
 }
 
 .slider-with-thumb-label {

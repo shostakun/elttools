@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import question from "@/assets/question.svg";
 import { defaultSet } from "@/assets/cards";
 import type { Card, CardSet } from "@/types/cards";
 import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
+import { calcOneRowLayout, useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
 import { sample, sampleSize, startCase } from "lodash";
-import { computed, onMounted, ref, watch, type Ref } from "vue";
+import { computed, onMounted, ref, useTemplateRef, watch, type Ref } from "vue";
 
 const cardSet: Ref<CardSet> = ref(defaultSet);
 
@@ -33,24 +35,29 @@ const availablePatterns = computed(() =>
     .flat(),
 );
 
+const hintLength = ref(6);
+const answerLength = ref(2);
+const totalLength = computed(() => hintLength.value + answerLength.value);
+
+const sizer = useTemplateRef("sizer");
+const { handleResize, size } = useResize(sizer, totalLength, calcOneRowLayout);
+
 const questionNum = ref(0);
 const pattern = ref("01");
 const cards: Ref<Card[]> = ref(sampleSize(cardSet.value.cards, 2) as Card[]);
-const hintLength = ref(6);
-const answerLength = ref(2);
-const answered = ref(0);
-const reveal = ref(false);
+const answered = ref<Set<number>>(new Set());
+const reveal = computed(() => answered.value.size >= answerLength.value);
 const handleChoosePattern = () => {
   const newPattern = sample(availablePatterns.value);
   if (!newPattern) return;
-  reveal.value = false;
   questionNum.value++;
-  answered.value = 0;
+  answered.value = new Set();
   pattern.value = newPattern;
   answerLength.value = newPattern.length;
   hintLength.value = Math.min(newPattern.length * 3, 12 - answerLength.value);
   const n = new Set(newPattern.split("")).size;
   cards.value = sampleSize(cardSet.value.cards, n);
+  handleResize();
 };
 
 watch(cardSet, handleChoosePattern);
@@ -58,9 +65,9 @@ watch(availablePatterns, () => {
   if (!availablePatterns.value.includes(pattern.value)) handleChoosePattern();
 });
 
-const handleAnswered = () => {
-  answered.value++;
-  if (answered.value >= answerLength.value) reveal.value = true;
+const handleAnswered = (value?: number) => {
+  if (typeof value === "number" && value > hintLength.value)
+    answered.value.add(value);
 };
 
 const { onKey } = useKeys();
@@ -103,15 +110,19 @@ const imageFor = (i: number) =>
       </v-select>
     </template>
 
-    <div class="pattern">
-      <PatternCell
-        v-for="i in hintLength + answerLength"
-        :key="`${i}-${questionNum}`"
-        :image="imageFor(i)"
-        :answer="i > hintLength"
-        :reveal="reveal"
-        @answered="handleAnswered"
-      />
+    <div ref="sizer" class="pattern-sizer">
+      <div class="pattern-row">
+        <CardTile
+          v-for="i in totalLength"
+          :key="`${i}-${questionNum}`"
+          :action="i > hintLength || reveal ? undefined : 'showOnHover'"
+          density="high"
+          :image="i <= hintLength || answered.has(i) ? imageFor(i) : question"
+          :size="size"
+          :value="i"
+          @selected="handleAnswered"
+        />
+      </div>
     </div>
   </Tool>
 </template>
@@ -122,11 +133,19 @@ const imageFor = (i: number) =>
   display: flex;
 }
 
-.pattern {
-  align-items: stretch;
+.pattern-row {
   display: flex;
-  gap: 0.5rem;
-  margin: 1rem;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.pattern-sizer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
   position: relative;
   width: 100%;
 }
