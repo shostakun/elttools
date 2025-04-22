@@ -5,7 +5,7 @@ import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
 import { calcOneRowLayout, useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
-import { sample, shuffle } from "lodash";
+import { shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 import draggable from "vuedraggable";
 
@@ -51,9 +51,10 @@ watch(
       <div v-if="startLabel" class="ordering-label">{{ startLabel }} →</div>
       <draggable v-model="list" class="ordering-sortable" item-key="id">
         <template #item="{ element: { card } }">
-          <OrderingCell
+          <CardTile
             :key="card.id"
-            :image="sample(card.images)!"
+            density="high"
+            :image="card.images[0]"
             :size="`${size}px`"
           />
         </template>

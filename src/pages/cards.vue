@@ -4,7 +4,6 @@ import PointCard from "@/assets/cards/verbs/action2/point.png";
 import Point2Card from "@/assets/cards/verbs/action2/point2.png";
 import NoCard from "@/assets/no.png";
 import YesCard from "@/assets/yes.png";
-import { CardTileAction } from "@/types/cards";
 import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
 import { calcGridLayout, calcRows, useResize } from "@/utils/resize";
@@ -141,7 +140,7 @@ onMounted(handleRoll);
           <CardTile
             v-for="(card, i) in row"
             :key="`${card.id}-${roll}`"
-            :action="CardTileAction.highlight"
+            action="highlight"
             :hotkey="(j * cols + i + 1).toString()"
             :image="sample(card.images)!"
             :index="j * cols + i"

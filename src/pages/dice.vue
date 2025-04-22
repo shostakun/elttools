@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defaultSet } from "@/assets/cards";
-import { CardTileAction, flattenSetList } from "@/types/cards";
+import { flattenSetList } from "@/types/cards";
 import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
 import { useResize } from "@/utils/resize";
@@ -66,7 +66,7 @@ onMounted(handleRoll);
           <CardTile
             v-for="(card, i) in row"
             :key="card.id"
-            :action="CardTileAction.overlay"
+            action="overlay"
             :hotkey="(j * cols + i).toString()"
             :image="card.images[0]"
             :selected="selectedCard === card.id"

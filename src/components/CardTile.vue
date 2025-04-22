@@ -1,10 +1,11 @@
 <script setup lang="ts" generic="T = never">
-import { CardTileAction } from "@/types";
+import type { CardTileAction, CardTileDensity } from "@/types/cards";
 import { useKeys } from "@/utils/keys";
 import classNames from "classnames";
 
-const { action, image, hotkey, selected, size, value } = defineProps<{
+const { action, density, image, hotkey, selected, size, value } = defineProps<{
   action?: CardTileAction;
+  density?: CardTileDensity;
   hotkey?: string | string[];
   image: string;
   selected?: boolean;
@@ -23,11 +24,19 @@ if (hotkey) onKey(hotkey, handleSelect);
 </script>
 
 <template>
-  <div class="card-tile" :style="{ height: size, width: size }">
+  <div
+    :class="
+      classNames('card-tile', {
+        'card-high-density': density === 'high',
+      })
+    "
+    :style="{ height: size, width: size }"
+  >
     <div
       :class="
         classNames('card-background', {
-          'card-highlight': selected && action === CardTileAction.highlight,
+          'card-highlight': selected && action === 'highlight',
+          'card-high-density': density === 'high',
         })
       "
       @click.prevent.stop="handleSelect"
@@ -35,7 +44,7 @@ if (hotkey) onKey(hotkey, handleSelect);
       <v-img class="card-image" :src="image" />
     </div>
     <div
-      v-if="action === CardTileAction.overlay"
+      v-if="action === 'overlay'"
       class="card-overlay"
       :style="{
         opacity: selected ? 1 : 0,
@@ -53,6 +62,10 @@ if (hotkey) onKey(hotkey, handleSelect);
 .card-tile {
   padding: 0.5rem;
   position: relative;
+
+  &.card-high-density {
+    padding: 0.25rem;
+  }
 }
 
 .card-background {
@@ -68,6 +81,10 @@ if (hotkey) onKey(hotkey, handleSelect);
 
   &.card-highlight {
     background-color: lightblue;
+  }
+
+  &.card-high-density {
+    padding: 0.5rem;
   }
 }
 

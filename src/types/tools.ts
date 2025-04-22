@@ -104,7 +104,10 @@ You can select the card sets you want to include. Just make sure to choose enoug
     controls: [{ action: ["Enter"], result: "Shuffle" }],
     description: `Put a set of cards in order. Great for comparatives and sequencing (e.g. daily routines).
 
-Set the **start label** and **end label** to make it clear what to do to students.`,
+Set the **start label** and **end label** to show what order students should use. For example:
+- a → z
+- smallest → biggest
+- least favorite → most favorite`,
     id: "ordering",
     title: "Ordering",
     thumbnail: OrderingThumb,
