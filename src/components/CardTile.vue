@@ -23,16 +23,16 @@ if (hotkey) onKey(hotkey, handleSelect);
 </script>
 
 <template>
-  <div class="card-cell" :style="{ height: size, width: size }">
+  <div class="card-tile" :style="{ height: size, width: size }">
     <div
       :class="
-        classNames('card-image', {
+        classNames('card-background', {
           'card-highlight': selected && action === CardTileAction.highlight,
         })
       "
       @click.prevent.stop="handleSelect"
     >
-      <v-img :src="image" />
+      <v-img class="card-image" :src="image" />
     </div>
     <div
       v-if="action === CardTileAction.overlay"
@@ -50,12 +50,12 @@ if (hotkey) onKey(hotkey, handleSelect);
 </template>
 
 <style lang="scss">
-.card-cell {
+.card-tile {
   padding: 0.5rem;
   position: relative;
 }
 
-.card-image {
+.card-background {
   align-items: center;
   background-color: #88888844;
   border-radius: 0.5rem;
@@ -69,6 +69,11 @@ if (hotkey) onKey(hotkey, handleSelect);
   &.card-highlight {
     background-color: lightblue;
   }
+}
+
+.card-image {
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 .card-overlay {

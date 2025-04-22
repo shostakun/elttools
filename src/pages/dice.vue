@@ -9,30 +9,8 @@ import { chunk, shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 
 const n = ref(6);
-const cols = ref(n.value);
-
 const container = useTemplateRef("container");
-const size = ref(100);
-const handleResize = () => {
-  const rect = container.value?.getBoundingClientRect();
-  const ratio = rect ? rect.width / rect.height : 4 / 3;
-
-  let c = 1;
-  while (c / Math.ceil(n.value / c) < ratio) {
-    c++;
-  }
-  const r = Math.ceil(n.value / c);
-  c = Math.ceil(n.value / r);
-  cols.value = c;
-
-  if (container.value) {
-    size.value = Math.min(
-      container.value.clientHeight / r,
-      container.value.clientWidth / c,
-    );
-  }
-};
-useResize(handleResize);
+const { cols, handleResize, size } = useResize(container, n);
 
 const cardSets = ref([defaultSet]);
 const allCards = computed(() => flattenSetList(cardSets.value));

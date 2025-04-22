@@ -7,7 +7,7 @@ import YesCard from "@/assets/yes.png";
 import { CardTileAction } from "@/types/cards";
 import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
-import { useResize } from "@/utils/resize";
+import { calcGridLayout, calcRows, useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
 import { chunk, sample, shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
@@ -23,35 +23,13 @@ const polarityImg = ref(choosePolarityImg());
 const n = ref(4);
 
 const container = useTemplateRef("container");
-const cols = ref(n.value);
-const size = ref(100);
-const handleResize = () => {
-  const rect = container.value?.getBoundingClientRect();
-  const ratio = rect ? rect.width / rect.height : 4 / 3;
-
-  let c = 1;
-  if (n.value === 2) {
-    // Force one column.
-  } else if (n.value === 4) {
-    // Force two columns.
-    c = 2;
-  } else {
-    while (c / Math.ceil(n.value / c) < ratio) {
-      c++;
-    }
-  }
-  const r = Math.ceil(n.value / c);
-  c = Math.ceil(n.value / r);
-  cols.value = c;
-
-  if (container.value) {
-    size.value = Math.min(
-      container.value.clientHeight / r,
-      container.value.clientWidth / c,
-    );
-  }
-};
-useResize(handleResize);
+const { cols, handleResize, size } = useResize(container, n, (rect, num) =>
+  num === 2
+    ? calcRows(1, num) // Force one column.
+    : num === 4
+      ? calcRows(2, num) // Force two columns.
+      : calcGridLayout(rect, num),
+);
 
 const cardSet = ref(defaultSet);
 const chooseCards = () => shuffle(cardSet.value.cards).slice(0, n.value);

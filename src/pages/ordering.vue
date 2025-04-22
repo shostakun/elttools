@@ -3,22 +3,18 @@ import { defaultSet } from "@/assets/cards";
 import { type Card } from "@/types/cards";
 import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
-import { useResize } from "@/utils/resize";
+import { calcOneRowLayout, useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
 import { sample, shuffle } from "lodash";
-import { onMounted, ref, useTemplateRef, watch } from "vue";
+import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 import draggable from "vuedraggable";
 
 const cardSet = ref(defaultSet);
 const cards = ref<Card[]>([]);
+const n = computed(() => cards.value.length);
 
 const sizer = useTemplateRef("sizer");
-const size = ref(100);
-const handleResize = () => {
-  const rect = sizer.value?.getBoundingClientRect();
-  if (rect) size.value = rect.width / cards.value.length;
-};
-useResize(handleResize);
+const { handleResize, size } = useResize(sizer, n, calcOneRowLayout);
 
 const handleShuffle = () => {
   cards.value = shuffle(cardSet.value.cards);
