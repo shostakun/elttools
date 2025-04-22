@@ -116,8 +116,13 @@ Set the **start label** and **end label** to show what order students should use
   },
   {
     controls: [{ action: ["Enter"], result: "New pattern" }],
-    description:
-      "Easy hidden patterns. Students must remember the pattern and figure out what comes next. Great for practicing vocabulary.",
+    description: `Remember the hidden pattern and figure out what comes next. Great for practicing vocabulary.
+
+The outlined squares are hints; hover over or tap them to reveal the picture. The squares with question marks are the ones students must guess. Click them one-by-one as the students make guesses.
+
+There are three difficulties, which are all turned on by default. For younger students, I recommend turning off medium and hard until they get the hand of it.
+
+Try turning on the **wrap pattern** setting on narrower screens, or to make the activity a little easier.`,
     id: "patterns",
     title: "Patterns",
     thumbnail: PatternThumb,

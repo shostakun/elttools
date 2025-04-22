@@ -3,7 +3,7 @@ import { defaultSet } from "@/assets/cards";
 import { type Card } from "@/types/cards";
 import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
-import { calcOneRowLayout, useResize } from "@/utils/resize";
+import { calcOneRow, useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
 import { shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
@@ -14,7 +14,7 @@ const cards = ref<Card[]>([]);
 const n = computed(() => cards.value.length);
 
 const sizer = useTemplateRef("sizer");
-const { handleResize, size } = useResize(sizer, n, calcOneRowLayout);
+const { handleResize, size } = useResize(sizer, n, calcOneRow);
 
 const handleShuffle = () => {
   cards.value = shuffle(cardSet.value.cards);

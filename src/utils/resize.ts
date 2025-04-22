@@ -11,7 +11,7 @@ export const calcGridLayout = (rect: DOMRect, num: number) => {
 };
 type CalcLayout = typeof calcGridLayout;
 
-export const calcOneRowLayout: CalcLayout = (_, num) => ({
+export const calcOneRow: CalcLayout = (_, num) => ({
   cols: num,
   rows: 1,
 });

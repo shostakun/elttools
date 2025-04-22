@@ -4,9 +4,9 @@ import { defaultSet } from "@/assets/cards";
 import type { Card, CardSet } from "@/types/cards";
 import tools from "@/types/tools";
 import { useKeys } from "@/utils/keys";
-import { calcOneRowLayout, useResize } from "@/utils/resize";
+import { calcOneRow, calcRows, useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
-import { sample, sampleSize, startCase } from "lodash";
+import { chunk, range, sample, sampleSize, startCase } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch, type Ref } from "vue";
 
 const cardSet: Ref<CardSet> = ref(defaultSet);
@@ -39,8 +39,18 @@ const hintLength = ref(6);
 const answerLength = ref(2);
 const totalLength = computed(() => hintLength.value + answerLength.value);
 
+const wrap = ref(false);
 const sizer = useTemplateRef("sizer");
-const { handleResize, size } = useResize(sizer, totalLength, calcOneRowLayout);
+const { cols, handleResize, size } = useResize(
+  sizer,
+  totalLength,
+  (rect: DOMRect, num: number) =>
+    wrap.value
+      ? calcRows(answerLength.value, totalLength.value)
+      : calcOneRow(rect, num),
+);
+watch(wrap, handleResize);
+const indices = computed(() => chunk(range(totalLength.value), cols.value));
 
 const questionNum = ref(0);
 const pattern = ref("01");
@@ -66,7 +76,7 @@ watch(availablePatterns, () => {
 });
 
 const handleAnswered = (value?: number) => {
-  if (typeof value === "number" && value > hintLength.value)
+  if (typeof value === "number" && value >= hintLength.value)
     answered.value.add(value);
 };
 
@@ -108,16 +118,17 @@ const imageFor = (i: number) =>
           <v-divider class="mt-2"></v-divider>
         </template>
       </v-select>
+      <v-switch v-model="wrap" label="Wrap pattern" />
     </template>
 
     <div ref="sizer" class="pattern-sizer">
-      <div class="pattern-row">
+      <div v-for="(row, j) in indices" :key="j" class="pattern-row">
         <CardTile
-          v-for="i in totalLength"
+          v-for="i in row"
           :key="`${i}-${questionNum}`"
-          :action="i > hintLength || reveal ? undefined : 'showOnHover'"
+          :action="i >= hintLength || reveal ? undefined : 'showOnHover'"
           density="high"
-          :image="i <= hintLength || answered.has(i) ? imageFor(i) : question"
+          :image="i < hintLength || answered.has(i) ? imageFor(i) : question"
           :size="size"
           :value="i"
           @selected="handleAnswered"
