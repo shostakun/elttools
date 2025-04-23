@@ -1,23 +1,21 @@
 <script lang="ts" setup>
-import { defaultSet } from "@/assets/cards";
 import { type Card } from "@/types/cards";
 import tools from "@/types/tools";
+import { useCardSet } from "@/utils/cards";
 import { useKeys } from "@/utils/keys";
 import { calcOneRow, useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
-import { shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 import draggable from "vuedraggable";
 
-const cardSet = ref(defaultSet);
-const cards = ref<Card[]>([]);
+const { cards, cardSet, chooseCards } = useCardSet();
 const n = computed(() => cards.value.length);
 
 const sizer = useTemplateRef("sizer");
 const { handleResize, size } = useResize(sizer, n, calcOneRow);
 
 const handleShuffle = () => {
-  cards.value = shuffle(cardSet.value.cards);
+  chooseCards();
   handleResize();
 };
 watch(cardSet, handleShuffle);

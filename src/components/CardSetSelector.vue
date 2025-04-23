@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { defaultSet, sets } from "@/assets/cards";
 import type { CardSet } from "@/types/cards";
+import { useCardSetCommon } from "@/utils/cards";
 import { sortBy } from "lodash";
 import { computed } from "vue";
 
-const selectedCardSet = defineModel<CardSet | CardSet[]>({
-  default: defaultSet,
-});
+const { allSets } = useCardSetCommon();
+
+const selectedCardSet = defineModel<CardSet | CardSet[]>();
 
 const multiple = computed(() => selectedCardSet.value instanceof Array);
-const allSets = computed(() => Object.values(sets));
 const cardSetOptions = computed(() => sortBy(allSets.value, ["label"]));
 const allSelected = computed(
   () =>
@@ -17,7 +16,9 @@ const allSelected = computed(
     (selectedCardSet.value as CardSet[]).length === cardSetOptions.value.length,
 );
 
-const handleSelectAll = () => (selectedCardSet.value = allSets.value);
+const handleSelectAll = () => {
+  if (multiple.value) selectedCardSet.value = Object.values(allSets.value);
+};
 </script>
 
 <template>

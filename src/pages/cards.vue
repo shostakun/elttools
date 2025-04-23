@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { defaultSet } from "@/assets/cards";
 import PointCard from "@/assets/cards/verbs/action2/point.png";
 import Point2Card from "@/assets/cards/verbs/action2/point2.png";
 import NoCard from "@/assets/no.png";
 import YesCard from "@/assets/yes.png";
 import tools from "@/types/tools";
+import { useCardSet } from "@/utils/cards";
 import { useKeys } from "@/utils/keys";
 import { calcGridLayout, calcRows, useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
-import { chunk, sample, shuffle } from "lodash";
+import { chunk, sample } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
+
+const { cards, cardSet, chooseCards, numCards } = useCardSet(4);
 
 const demonstratives = ref(false);
 const shuffleDemonstratives = ref(true);
@@ -19,21 +21,20 @@ const polarity = ref(false);
 const shufflePolarity = ref(true);
 const choosePolarityImg = () => sample([NoCard, YesCard]);
 const polarityImg = ref(choosePolarityImg());
-const n = ref(4);
 
 const container = useTemplateRef("container");
-const { cols, handleResize, size } = useResize(container, n, (rect, num) =>
-  num === 2
-    ? calcRows(1, num) // Force one column.
-    : num === 4
-      ? calcRows(2, num) // Force two columns.
-      : calcGridLayout(rect, num),
+const { cols, handleResize, size } = useResize(
+  container,
+  numCards,
+  (rect, num) =>
+    num === 2
+      ? calcRows(1, num) // Force one column.
+      : num === 4
+        ? calcRows(2, num) // Force two columns.
+        : calcGridLayout(rect, num),
 );
 
-const cardSet = ref(defaultSet);
-const chooseCards = () => shuffle(cardSet.value.cards).slice(0, n.value);
-const chosenCards = ref(chooseCards());
-const cards = computed(() => chunk(chosenCards.value, cols.value));
+const cardChunks = computed(() => chunk(cards.value, cols.value));
 const selectedCard = ref("");
 const handleSelected = (value?: string) => {
   if (value) selectedCard.value = value;
@@ -43,19 +44,19 @@ const roll = ref(0);
 
 const handleRoll = () => {
   roll.value++;
-  chosenCards.value = chooseCards();
+  chooseCards();
   selectedCard.value = "";
   handleResize();
   if (shuffleDemonstratives.value)
     demonstrativeImg.value = chooseDemonstrativeImg();
   if (shufflePolarity.value) polarityImg.value = choosePolarityImg();
 };
-watch([cardSet, n], handleRoll);
+watch([cardSet, numCards], handleRoll);
 const { onKey } = useKeys();
 onKey("Enter", handleRoll);
 onKey("Escape", handleDeselect);
 onKey(" ", () => {
-  n.value = n.value > 1 ? 1 : cardSet.value.cards.length;
+  numCards.value = numCards.value > 1 ? 1 : cardSet.value.cards.length;
 });
 onKey("d", () => {
   demonstratives.value = !demonstratives.value;
@@ -127,7 +128,7 @@ onMounted(handleRoll);
         />
       </div>
       <v-slider
-        v-model="n"
+        v-model="numCards"
         label="Number of choices"
         :max="cardSet.cards.length"
         min="1"
@@ -136,7 +137,7 @@ onMounted(handleRoll);
 
     <div ref="container" class="card-container" @click.prevent="handleDeselect">
       <div class="card-wrapper">
-        <div v-for="(row, j) in cards" :key="j" class="card-row">
+        <div v-for="(row, j) in cardChunks" :key="j" class="card-row">
           <CardTile
             v-for="(card, i) in row"
             :key="`${card.id}-${roll}`"

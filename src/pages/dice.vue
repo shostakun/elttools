@@ -1,28 +1,24 @@
 <script setup lang="ts">
-import { defaultSet } from "@/assets/cards";
-import { flattenSetList } from "@/types/cards";
 import tools from "@/types/tools";
+import { useCardSets } from "@/utils/cards";
 import { useKeys } from "@/utils/keys";
 import { useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
 import { chunk, shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 
-const n = ref(6);
-const container = useTemplateRef("container");
-const { cols, handleResize, size } = useResize(container, n);
+const { cards, cardSets, cardsInSets, chooseCards, numCards } = useCardSets(6);
 
-const cardSets = ref([defaultSet]);
-const allCards = computed(() => flattenSetList(cardSets.value));
-const chooseCards = () => shuffle(allCards.value).slice(0, n.value);
+const container = useTemplateRef("container");
+const { cols, handleResize, size } = useResize(container, numCards);
+
 const chooseValues = () =>
   shuffle(
-    Array(n.value)
+    Array(numCards.value)
       .fill(0)
       .map((_, i) => i + 1),
   );
-const chosenCards = ref(chooseCards());
-const cards = computed(() => chunk(chosenCards.value, cols.value));
+const cardChunks = computed(() => chunk(cards.value, cols.value));
 const chosenValues = ref(chooseValues());
 const values = computed(() => chunk(chosenValues.value, cols.value));
 
@@ -34,11 +30,11 @@ const handleDeselect = () => (selectedCard.value = "");
 
 const handleRoll = () => {
   handleDeselect();
-  chosenCards.value = chooseCards();
+  chooseCards();
   chosenValues.value = chooseValues();
   handleResize();
 };
-watch([cardSets, n], handleRoll);
+watch([cardSets, numCards], handleRoll);
 const { onKey } = useKeys();
 onKey("Enter", handleRoll);
 onMounted(handleRoll);
@@ -53,16 +49,16 @@ onMounted(handleRoll);
     <template #tool-menu>
       <CardSetSelector v-model="cardSets" />
       <v-slider
-        v-model="n"
+        v-model="numCards"
         label="Number of choices"
-        :max="allCards.length"
+        :max="cardsInSets.length"
         min="2"
       />
     </template>
 
     <div ref="container" class="dice-container">
       <div class="dice">
-        <div v-for="(row, j) in cards" :key="j" class="dice-row">
+        <div v-for="(row, j) in cardChunks" :key="j" class="dice-row">
           <CardTile
             v-for="(card, i) in row"
             :key="card.id"

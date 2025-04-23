@@ -1,29 +1,24 @@
 <script setup lang="ts">
-import { sets } from "@/assets/cards";
-import { flattenSetList, type Card, type CardSet } from "@/types/cards";
+import { type Card } from "@/types/cards";
 import tools from "@/types/tools";
+import { useCardSets } from "@/utils/cards";
 import { useCountdown } from "@/utils/countdown";
 import { useKeys } from "@/utils/keys";
 import { mdiRefresh } from "@mdi/js";
-import { clamp, sampleSize, shuffle } from "lodash";
-import { computed, onMounted, ref, watch, type Ref } from "vue";
+import { clamp, shuffle } from "lodash";
+import { computed, onMounted, ref, watch } from "vue";
+
+const { allSets, cardSets, cardsInSets, chooseCards, numCards } = useCardSets();
 
 const answers = ref<Card[]>([]);
 const boardA = ref<Card[]>([]);
 const boardB = ref<Card[]>([]);
 const boardSizeModel = ref(4);
-const cardSets: Ref<CardSet[]> = ref(
-  Object.values(sets).filter(
-    // By default, only include nouns that don't have backgrounds.
-    (set) => set.tags.includes("noun") && !set.tags.includes("background"),
-  ),
-);
 const autoRefresh = ref(true);
 const findSame = ref(true);
 const guess = ref<Card | null>(null);
-const images = computed(() => flattenSetList(cardSets.value));
 const maxBoardSize = computed(() =>
-  Math.floor(Math.sqrt((images.value.length + 1) / 2)),
+  Math.floor(Math.sqrt((cardsInSets.value.length + 1) / 2)),
 );
 const minBoardSize = 2;
 const boardSize = computed(() =>
@@ -33,9 +28,9 @@ const enoughCards = computed(() => maxBoardSize.value >= minBoardSize);
 
 const handleMakeBoard = () => {
   const boardCount = boardSize.value ** 2;
-  const nImages = boardCount * 2 - 1;
-  const samples = sampleSize(images.value, nImages);
-  if (samples.length < nImages) return;
+  numCards.value = boardCount * 2 - 1;
+  const samples = chooseCards();
+  if (samples.length < numCards.value) return;
   guess.value = null;
   answers.value = [samples.pop() as Card];
   if (!findSame.value) answers.value.push(samples.pop() as Card);
@@ -74,6 +69,10 @@ const handleAnswer = (card: Card) => {
 };
 
 onMounted(() => {
+  // By default, only include nouns that don't have backgrounds.
+  cardSets.value = Object.values(allSets.value).filter(
+    (set) => set.tags.includes("noun") && !set.tags.includes("background"),
+  );
   handleMakeBoard();
   onCountdownEnd(handleMakeBoard);
 });

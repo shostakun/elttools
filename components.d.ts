@@ -7,6 +7,7 @@ export {};
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CardProvider: typeof import('./src/components/CardProvider.vue')['default']
     CardSetSelector: typeof import('./src/components/CardSetSelector.vue')['default']
     CardTile: typeof import('./src/components/CardTile.vue')['default']
     FontSelector: typeof import('./src/components/FontSelector.vue')['default']

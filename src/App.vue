@@ -2,7 +2,9 @@
   <v-app>
     <v-main>
       <ThemeProvider>
-        <router-view />
+        <CardProvider>
+          <router-view />
+        </CardProvider>
       </ThemeProvider>
     </v-main>
   </v-app>

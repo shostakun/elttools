@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import question from "@/assets/question.svg";
-import { defaultSet } from "@/assets/cards";
-import type { Card, CardSet } from "@/types/cards";
 import tools from "@/types/tools";
+import { useCardSet } from "@/utils/cards";
 import { useKeys } from "@/utils/keys";
 import { calcOneRow, calcRows, useResize } from "@/utils/resize";
 import { mdiRefresh } from "@mdi/js";
-import { chunk, range, sample, sampleSize, startCase } from "lodash";
-import { computed, onMounted, ref, useTemplateRef, watch, type Ref } from "vue";
+import { chunk, range, sample, startCase } from "lodash";
+import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 
-const cardSet: Ref<CardSet> = ref(defaultSet);
+const { cards, cardSet, chooseCards, numCards } = useCardSet();
 
 const patterns = {
   easy: ["01", "012"],
@@ -54,7 +53,6 @@ const indices = computed(() => chunk(range(totalLength.value), cols.value));
 
 const questionNum = ref(0);
 const pattern = ref("01");
-const cards: Ref<Card[]> = ref(sampleSize(cardSet.value.cards, 2) as Card[]);
 const answered = ref<Set<number>>(new Set());
 const reveal = computed(() => answered.value.size >= answerLength.value);
 const handleChoosePattern = () => {
@@ -65,8 +63,8 @@ const handleChoosePattern = () => {
   pattern.value = newPattern;
   answerLength.value = newPattern.length;
   hintLength.value = Math.min(newPattern.length * 3, 12 - answerLength.value);
-  const n = new Set(newPattern.split("")).size;
-  cards.value = sampleSize(cardSet.value.cards, n);
+  numCards.value = new Set(newPattern.split("")).size;
+  chooseCards();
   handleResize();
 };
 
@@ -88,7 +86,8 @@ onMounted(() => {
 });
 
 const imageFor = (i: number) =>
-  cards.value[parseInt(pattern.value[i % pattern.value.length])].images[0];
+  cards.value[parseInt(pattern.value[i % pattern.value.length])]?.images[0] ??
+  question;
 </script>
 
 <template>
