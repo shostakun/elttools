@@ -64,9 +64,7 @@ const wordCells = ref(chooseWords(selectedWords.value));
 const table = useTemplateRef<HTMLTableElement, string>("table");
 const wordWidth = computed(() =>
   Math.max(
-    ...wordCells.value.map((word) =>
-      calcTextWidth(word, table.value ?? `64px ${getGlobalFont()}`),
-    ),
+    ...wordCells.value.map((word) => calcTextWidth(word, table.value ?? `64px ${getGlobalFont()}`)),
   ),
 );
 
@@ -202,10 +200,7 @@ onMounted(() => {
             <div v-if="showNumbers" class="tic-tac-toe-number">
               {{ rn * size + cn + 1 }}
             </div>
-            <div
-              class="tic-tac-toe-word"
-              :style="{ minWidth: `${wordWidth}px` }"
-            >
+            <div class="tic-tac-toe-word" :style="{ minWidth: `${wordWidth}px` }">
               {{ word }}
             </div>
           </td>

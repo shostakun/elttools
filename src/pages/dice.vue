@@ -48,12 +48,7 @@ onMounted(handleRoll);
 
     <template #tool-menu>
       <CardSetSelector v-model="cardSets" />
-      <v-slider
-        v-model="numCards"
-        label="Number of choices"
-        :max="cardsInSets.length"
-        min="2"
-      />
+      <v-slider v-model="numCards" label="Number of choices" :max="cardsInSets.length" min="2" />
     </template>
 
     <div ref="container" class="dice-container">

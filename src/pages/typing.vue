@@ -95,18 +95,14 @@ const levels: Level[] = [
   {
     review: true,
     new: "-=^~@`\\¥|_".split(""),
-    old: " asdfghjkl;qwertyuiopzxcvbnm,./1234567890$'#()\"%&!+:*<>?/[]{}".split(
-      "",
-    ),
+    old: " asdfghjkl;qwertyuiopzxcvbnm,./1234567890$'#()\"%&!+:*<>?/[]{}".split(""),
   },
 ].map((level: Partial<Level>, i) => {
   // Insert previously-studied levels if needed.
   level.index = i;
   if (!level.home) level.home = [];
   if (!level.old) {
-    level.old = previous
-      .filter((key) => !level.home!.includes(key))
-      .concat(level.home);
+    level.old = previous.filter((key) => !level.home!.includes(key)).concat(level.home);
     previous = previous.concat(level.new!);
   }
   return level as Level;
@@ -114,23 +110,18 @@ const levels: Level[] = [
 
 const selectedLevel = ref(levels[0]);
 const levelOptions = levels.map((level, i) => ({
-  title:
-    `${i}: ` +
-    (level.title ??
-      `${level.review ? "Review" : "Learn"} ${level.new.join(", ")}`),
+  title: `${i}: ` + (level.title ?? `${level.review ? "Review" : "Learn"} ${level.new.join(", ")}`),
   value: level,
 }));
 
 const handleNextLevel = () =>
-  (selectedLevel.value =
-    levels[Math.min(levels.length - 1, selectedLevel.value.index + 1)]);
+  (selectedLevel.value = levels[Math.min(levels.length - 1, selectedLevel.value.index + 1)]);
 const handlePreviousLevel = () =>
   (selectedLevel.value = levels[Math.max(0, selectedLevel.value.index - 1)]);
 
 const makePractice = (level: Level) => {
   let target = randomStrings(level.new, 2, includeCapitals.value);
-  target +=
-    " " + randomStrings(level.home.concat(level.new), 4, includeCapitals.value);
+  target += " " + randomStrings(level.home.concat(level.new), 4, includeCapitals.value);
   target +=
     " " +
     randomStrings(
@@ -147,17 +138,10 @@ const makePractice = (level: Level) => {
       includeCapitals.value,
     );
   if (level.old.length > 0) {
-    target +=
-      " " +
-      randomStrings(level.old.concat(level.new), 4, includeCapitals.value);
+    target += " " + randomStrings(level.old.concat(level.new), 4, includeCapitals.value);
   }
   const practiceLength = 8;
-  const words = randomWords(
-    level.old,
-    level.new,
-    practiceLength,
-    includeCapitals.value,
-  );
+  const words = randomWords(level.old, level.new, practiceLength, includeCapitals.value);
   if (words.length > 0) {
     target += " " + words.join(" ");
   }
@@ -177,8 +161,7 @@ const score = computed(() =>
   Math.round(
     charactersEntered.value === 0
       ? 100
-      : (100 * (charactersEntered.value - mistakesEntered.value)) /
-          charactersEntered.value,
+      : (100 * (charactersEntered.value - mistakesEntered.value)) / charactersEntered.value,
   ),
 );
 
@@ -197,12 +180,7 @@ watch([includeCapitals, selectedLevel], makeTarget);
 onMounted(makeTarget);
 
 const running = computed(
-  () =>
-    !!(
-      target.value.length &&
-      buffer.value.length &&
-      buffer.value.length < target.value.length
-    ),
+  () => !!(target.value.length && buffer.value.length && buffer.value.length < target.value.length),
 );
 
 const { onKey } = useKeys();
@@ -292,10 +270,7 @@ onKey(ANY_KEY, (event) => {
       </div>
     </template>
 
-    <div
-      class="typing-area"
-      :style="overrideFont ? { fontFamily: selectedFont } : {}"
-    >
+    <div class="typing-area" :style="overrideFont ? { fontFamily: selectedFont } : {}">
       <span
         v-for="(c, i) in target"
         :key="i"

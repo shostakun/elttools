@@ -12,8 +12,7 @@ const multiple = computed(() => selectedCardSet.value instanceof Array);
 const cardSetOptions = computed(() => sortBy(allSets.value, ["label"]));
 const allSelected = computed(
   () =>
-    multiple.value &&
-    (selectedCardSet.value as CardSet[]).length === cardSetOptions.value.length,
+    multiple.value && (selectedCardSet.value as CardSet[]).length === cardSetOptions.value.length,
 );
 
 const handleSelectAll = () => {
@@ -35,9 +34,7 @@ const handleSelectAll = () => {
       <v-list-item title="Select All" @click="handleSelectAll">
         <template #prepend>
           <v-checkbox-btn
-            :indeterminate="
-              !!(selectedCardSet as CardSet[]).length && !allSelected
-            "
+            :indeterminate="!!(selectedCardSet as CardSet[]).length && !allSelected"
             :model-value="allSelected"
           />
         </template>

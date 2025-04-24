@@ -10,10 +10,7 @@ import { computed, inject, onMounted, ref, watch, type Ref } from "vue";
 
 export function makeCards<T extends CardMap>(cardMap: T) {
   return Object.fromEntries(
-    Object.entries(cardMap).map(([k, v]) => [
-      k,
-      { ...v, id: k, label: v.label ?? k },
-    ]),
+    Object.entries(cardMap).map(([k, v]) => [k, { ...v, id: k, label: v.label ?? k }]),
   ) as unknown as Record<keyof typeof cardMap, Card>;
 }
 
@@ -23,11 +20,10 @@ export const makeSet = (
   tags: string[],
   label?: string,
   description?: string,
+  transform = (card: Card) => card,
 ): CardSetMap => ({
   [id]: {
-    cards: allCards.filter(
-      (c) => intersection(tags, c.tags).length === tags.length,
-    ),
+    cards: allCards.filter((c) => intersection(tags, c.tags).length === tags.length).map(transform),
     description,
     id,
     label: label ?? startCase(id),

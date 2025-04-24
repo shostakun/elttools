@@ -11,9 +11,9 @@ import { tools } from "@/types";
     <h1>ELT Tools</h1>
     <h2>for the classroom or online</h2>
     <p>
-      These are tools I've built for my own use over the years. Many/most of
-      them have been designed with online lessons in mind, but I use them in
-      classroom settings as well. Each has some info about how I use them.
+      These are tools I've built for my own use over the years. Many/most of them have been designed
+      with online lessons in mind, but I use them in classroom settings as well. Each has some info
+      about how I use them.
     </p>
     <div class="list">
       <ToolListCard v-for="tool in tools" :key="tool.id" :tool="tool" />

@@ -19,9 +19,7 @@ class SoundLoader {
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error(
-          `Failed to fetch sound from ${url}: ${response.statusText}`,
-        );
+        throw new Error(`Failed to fetch sound from ${url}: ${response.statusText}`);
       }
 
       const arrayBuffer = await response.arrayBuffer();

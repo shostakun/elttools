@@ -11,10 +11,6 @@ onMounted(() => (selectedFont.value = getGlobalFont()));
 </script>
 
 <template>
-  <v-switch
-    v-model="darkMode"
-    label="Dark mode"
-    @update:model-value="storeDarkMode"
-  />
+  <v-switch v-model="darkMode" label="Dark mode" @update:model-value="storeDarkMode" />
   <FontSelector v-model="selectedFont" />
 </template>

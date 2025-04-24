@@ -7,10 +7,7 @@ export interface Card {
   tags: readonly string[];
 }
 
-export type CardMap = Record<
-  string,
-  Omit<Card, "id" | "label"> & { label?: string }
->;
+export type CardMap = Record<string, Omit<Card, "id" | "label"> & { label?: string }>;
 
 export interface CardSet {
   cards: Card[];

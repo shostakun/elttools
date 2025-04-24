@@ -137,28 +137,12 @@ const imageMap = {
   kenneyBuffalo: {
     images: [buffalo],
     label: "buffalo",
-    tags: [
-      "animal",
-      "buffalo",
-      "extra",
-      "Kenney",
-      "noun",
-      "singular",
-      "vector",
-    ],
+    tags: ["animal", "buffalo", "extra", "Kenney", "noun", "singular", "vector"],
   },
   kenneyCrocodile: {
     images: [crocodile],
     label: "crocodile",
-    tags: [
-      "animal",
-      "crocodile",
-      "extra",
-      "Kenney",
-      "noun",
-      "singular",
-      "vector",
-    ],
+    tags: ["animal", "crocodile", "extra", "Kenney", "noun", "singular", "vector"],
   },
   kenneyFrog: {
     images: [frog],
@@ -173,15 +157,7 @@ const imageMap = {
   kenneyNarwhal: {
     images: [narwhal],
     label: "narwhal",
-    tags: [
-      "animal",
-      "extra",
-      "Kenney",
-      "narwhal",
-      "noun",
-      "singular",
-      "vector",
-    ],
+    tags: ["animal", "extra", "Kenney", "narwhal", "noun", "singular", "vector"],
   },
   kenneyOrca: {
     images: [orca],
@@ -196,15 +172,7 @@ const imageMap = {
   kenneyPenguin: {
     images: [penguin],
     label: "penguin",
-    tags: [
-      "animal",
-      "extra",
-      "Kenney",
-      "noun",
-      "penguin",
-      "singular",
-      "vector",
-    ],
+    tags: ["animal", "extra", "Kenney", "noun", "penguin", "singular", "vector"],
   },
   kenneySloth: {
     images: [sloth],
@@ -223,32 +191,8 @@ export const images = makeCards(imageMap);
 export const imageList = Object.values(images);
 
 export const sets: Record<string, CardSet> = {
-  ...makeSet(imageList, "kenneyAnimals", [
-    "animal",
-    "Kenney",
-    "noun",
-    "singular",
-    "vector",
-  ]),
-  ...makeSet(imageList, "kenneyExtraAnimals", [
-    "animal",
-    "extra",
-    "Kenney",
-    "noun",
-    "vector",
-  ]),
-  ...makeSet(imageList, "kenneyFarmAnimals", [
-    "animal",
-    "farm",
-    "Kenney",
-    "noun",
-    "vector",
-  ]),
-  ...makeSet(imageList, "kenneyZooAnimals", [
-    "animal",
-    "Kenney",
-    "noun",
-    "vector",
-    "zoo",
-  ]),
+  ...makeSet(imageList, "kenneyAnimals", ["animal", "Kenney", "noun", "singular", "vector"]),
+  ...makeSet(imageList, "kenneyExtraAnimals", ["animal", "extra", "Kenney", "noun", "vector"]),
+  ...makeSet(imageList, "kenneyFarmAnimals", ["animal", "farm", "Kenney", "noun", "vector"]),
+  ...makeSet(imageList, "kenneyZooAnimals", ["animal", "Kenney", "noun", "vector", "zoo"]),
 };

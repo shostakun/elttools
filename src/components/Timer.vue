@@ -15,9 +15,7 @@ const reset = () => {
 defineExpose({ reset });
 
 const tick = () =>
-  (seconds.value = start.value
-    ? Math.floor(((stop.value || Date.now()) - start.value) / 1000)
-    : 0);
+  (seconds.value = start.value ? Math.floor(((stop.value || Date.now()) - start.value) / 1000) : 0);
 const interval = ref<ReturnType<typeof setInterval> | null>(null);
 
 watch(

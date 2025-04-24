@@ -14,18 +14,14 @@ const props = defineProps<{
   value?: T;
 }>();
 
-const sizeStr = computed(() =>
-  typeof props.size === "string" ? props.size : `${props.size}px`,
-);
+const sizeStr = computed(() => (typeof props.size === "string" ? props.size : `${props.size}px`));
 
 const emit = defineEmits<{ selected: [value?: T] }>();
 const handleSelect = () => {
   if (!props.selected) emit("selected", props.value);
 };
 
-const highlighted = computed(
-  () => props.selected && props.action === "highlight",
-);
+const highlighted = computed(() => props.selected && props.action === "highlight");
 
 const hovered = ref(false);
 const handleEndHover = () => (hovered.value = false);

@@ -57,20 +57,11 @@ const exampleWords = exampleWordsOnly.concat(
     return "_" + w;
   }),
   chooseN(exampleWordsOnly, 9).map(function (w) {
-    return (
-      w +
-      "@" +
-      sample(exampleWordsOnly) +
-      sample([".com", ".org", ".net", ".co.jp", ".jp"])
-    );
+    return w + "@" + sample(exampleWordsOnly) + sample([".com", ".org", ".net", ".co.jp", ".jp"]);
   }),
 );
 
-export const filterWords = (
-  newLevel: string[],
-  allLevels: string[],
-  count: number,
-) =>
+export const filterWords = (newLevel: string[], allLevels: string[], count: number) =>
   shuffle(
     exampleWords
       .filter((word) => {
@@ -114,11 +105,9 @@ export const randomWords = (
       return oldLevels.includes(p);
     });
   }
-  let surroundingPunct = Object.keys(surroundingPunctuation).filter(
-    function (p) {
-      return newLevel.includes(p);
-    },
-  );
+  let surroundingPunct = Object.keys(surroundingPunctuation).filter(function (p) {
+    return newLevel.includes(p);
+  });
   if (surroundingPunct.length < 1) {
     surroundingPunct = Object.keys(surroundingPunctuation).filter(function (p) {
       return oldLevels.includes(p);
@@ -128,9 +117,7 @@ export const randomWords = (
   // Choose appropriate words.
   let words = filterWords(newLevel, allLevels, count);
   if (words.length - count) {
-    words = shuffle(
-      words.concat(filterWords(allLevels, allLevels, count - words.length)),
-    );
+    words = shuffle(words.concat(filterWords(allLevels, allLevels, count - words.length)));
   }
 
   // Modify the chosen words by adding capitalization and punctuation.
@@ -148,10 +135,7 @@ export const randomWords = (
     choices = chooseN(range(0, words.length), Math.ceil(words.length / 4));
     choices.forEach(function (i) {
       const p = sample(surroundingPunct);
-      words[i] =
-        surroundingPunctuation[p!][0] +
-        words[i] +
-        surroundingPunctuation[p!][1];
+      words[i] = surroundingPunctuation[p!][0] + words[i] + surroundingPunctuation[p!][1];
     });
   }
   return words;

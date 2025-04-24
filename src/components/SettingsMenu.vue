@@ -26,11 +26,7 @@ const openDrawer = () => (drawer.value = true);
     <v-list>
       <v-list-item title="Settings">
         <template #prepend>
-          <v-btn
-            :icon="mdiChevronDoubleRight"
-            variant="plain"
-            @click="drawer = false"
-          />
+          <v-btn :icon="mdiChevronDoubleRight" variant="plain" @click="drawer = false" />
         </template>
       </v-list-item>
     </v-list>
@@ -41,21 +37,13 @@ const openDrawer = () => (drawer.value = true);
       <!-- Relevant settings for the context -->
       <slot />
 
-      <v-expansion-panels
-        v-if="slots.panels"
-        class="drawer-panels"
-        variant="accordion"
-      >
+      <v-expansion-panels v-if="slots.panels" class="drawer-panels" variant="accordion">
         <!-- Additional expansion panels -->
         <slot name="panels" />
       </v-expansion-panels>
 
       <!-- Global settings -->
-      <v-expansion-panels
-        v-if="globalSettings"
-        class="drawer-panels"
-        variant="accordion"
-      >
+      <v-expansion-panels v-if="globalSettings" class="drawer-panels" variant="accordion">
         <SettingsMenuPanel :icon="mdiCogs" label="Global Settings">
           <GlobalSettings />
         </SettingsMenuPanel>

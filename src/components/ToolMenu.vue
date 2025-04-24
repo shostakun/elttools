@@ -16,10 +16,7 @@ const { tool } = defineProps<{ tool: Tool }>();
       </SettingsMenuPanel>
 
       <!-- Controls -->
-      <ToolMenuControlsPanel
-        v-if="tool.controls.length"
-        :controls="tool.controls"
-      />
+      <ToolMenuControlsPanel v-if="tool.controls.length" :controls="tool.controls" />
     </template>
   </SettingsMenu>
 </template>

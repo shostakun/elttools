@@ -40,8 +40,7 @@ export const tools: Tool[] = [
       { action: ["Spacebar"], result: "Toggle between one and all cards" },
       {
         action: ["1-9"],
-        result:
-          "Select the corresponding card (reading left to right, top to bottom)",
+        result: "Select the corresponding card (reading left to right, top to bottom)",
       },
       { action: ["d"], result: "Toggle demonstrative character" },
       { action: ["f"], result: "Show female demonstrative character" },
@@ -69,8 +68,7 @@ export const tools: Tool[] = [
       { action: ["Enter"], result: "Roll" },
       {
         action: ["1-9"],
-        result:
-          "Reveal the number in corresponding square (reading left to right, top to bottom)",
+        result: "Reveal the number in corresponding square (reading left to right, top to bottom)",
       },
     ],
     description: `A replacement for rolling dice. Students choose one of the cards. Click the card to reveal a number. Good way to get a little extra vocab practice in while playing a game.

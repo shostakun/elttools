@@ -23,15 +23,12 @@ const choosePolarityImg = () => sample([NoCard, YesCard]);
 const polarityImg = ref(choosePolarityImg());
 
 const container = useTemplateRef("container");
-const { cols, handleResize, size } = useResize(
-  container,
-  numCards,
-  (rect, num) =>
-    num === 2
-      ? calcRows(1, num) // Force one column.
-      : num === 4
-        ? calcRows(2, num) // Force two columns.
-        : calcGridLayout(rect, num),
+const { cols, handleResize, size } = useResize(container, numCards, (rect, num) =>
+  num === 2
+    ? calcRows(1, num) // Force one column.
+    : num === 4
+      ? calcRows(2, num) // Force two columns.
+      : calcGridLayout(rect, num),
 );
 
 const cardChunks = computed(() => chunk(cards.value, cols.value));
@@ -47,8 +44,7 @@ const handleRoll = () => {
   chooseCards();
   selectedCard.value = "";
   handleResize();
-  if (shuffleDemonstratives.value)
-    demonstrativeImg.value = chooseDemonstrativeImg();
+  if (shuffleDemonstratives.value) demonstrativeImg.value = chooseDemonstrativeImg();
   if (shufflePolarity.value) polarityImg.value = choosePolarityImg();
 };
 watch([cardSet, numCards], handleRoll);
@@ -77,8 +73,7 @@ onKey("n", () => {
 });
 onKey("p", () => {
   polarity.value = !polarity.value;
-  if (polarity.value && shufflePolarity.value)
-    polarityImg.value = choosePolarityImg();
+  if (polarity.value && shufflePolarity.value) polarityImg.value = choosePolarityImg();
 });
 onKey("y", () => {
   polarity.value = true;
@@ -96,43 +91,22 @@ onMounted(handleRoll);
     <template #tool-menu>
       <CardSetSelector v-model="cardSet" />
       <div class="control-row">
-        <v-tooltip
-          text="Show a character to use for demonstratives? Use the `d` key to toggle."
-        >
+        <v-tooltip text="Show a character to use for demonstratives? Use the `d` key to toggle.">
           <template #activator="{ props }">
-            <v-switch
-              v-model="demonstratives"
-              v-bind="props"
-              label="Demonstratives"
-            />
+            <v-switch v-model="demonstratives" v-bind="props" label="Demonstratives" />
           </template>
         </v-tooltip>
-        <v-switch
-          v-model="shuffleDemonstratives"
-          :disabled="!demonstratives"
-          label="Shuffle"
-        />
+        <v-switch v-model="shuffleDemonstratives" :disabled="!demonstratives" label="Shuffle" />
       </div>
       <div class="control-row">
-        <v-tooltip
-          text="Show yes/no images for polarity? Use the `p` key to toggle."
-        >
+        <v-tooltip text="Show yes/no images for polarity? Use the `p` key to toggle.">
           <template #activator="{ props }">
             <v-switch v-model="polarity" v-bind="props" label="Yes/No" />
           </template>
         </v-tooltip>
-        <v-switch
-          v-model="shufflePolarity"
-          :disabled="!polarity"
-          label="Shuffle"
-        />
+        <v-switch v-model="shufflePolarity" :disabled="!polarity" label="Shuffle" />
       </div>
-      <v-slider
-        v-model="numCards"
-        label="Number of choices"
-        :max="cardSet.cards.length"
-        min="1"
-      />
+      <v-slider v-model="numCards" label="Number of choices" :max="cardSet.cards.length" min="1" />
     </template>
 
     <div ref="container" class="card-container" @click.prevent="handleDeselect">

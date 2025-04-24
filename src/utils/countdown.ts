@@ -43,13 +43,9 @@ export const useCountdown = (options: Partial<CountdownOptions> = {}) => {
 
   const countdownRunning = computed(() => countdown.value > 0);
 
-  const countdownStepsElapsed = computed(() =>
-    Math.ceil((duration - countdown.value) / interval),
-  );
+  const countdownStepsElapsed = computed(() => Math.ceil((duration - countdown.value) / interval));
 
-  const countdownStepsRemaining = computed(() =>
-    Math.ceil(countdown.value / interval),
-  );
+  const countdownStepsRemaining = computed(() => Math.ceil(countdown.value / interval));
 
   return {
     countdownRunning,

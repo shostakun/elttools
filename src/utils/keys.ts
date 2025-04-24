@@ -22,10 +22,8 @@ export const useKeys = () => {
   });
 
   return {
-    offKey: (key: typeof ANY_KEY | string | string[], cb?: KeyCallback) =>
-      off(key, cb),
-    onKey: (key: typeof ANY_KEY | string | string[], cb: KeyCallback) =>
-      on(key, cb),
+    offKey: (key: typeof ANY_KEY | string | string[], cb?: KeyCallback) => off(key, cb),
+    onKey: (key: typeof ANY_KEY | string | string[], cb: KeyCallback) => on(key, cb),
   };
 };
 

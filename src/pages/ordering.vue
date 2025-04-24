@@ -27,10 +27,7 @@ const startLabel = ref("");
 const endLabel = ref("");
 
 const list = ref<Array<{ card: Card; id: number }>>([]);
-watch(
-  cards,
-  () => (list.value = cards.value.map((card, i) => ({ card, id: i }))),
-);
+watch(cards, () => (list.value = cards.value.map((card, i) => ({ card, id: i }))));
 </script>
 
 <template>
@@ -49,17 +46,10 @@ watch(
       <div v-if="startLabel" class="ordering-label">{{ startLabel }} →</div>
       <draggable v-model="list" class="ordering-sortable" item-key="id">
         <template #item="{ element: { card } }">
-          <CardTile
-            :key="card.id"
-            density="high"
-            :image="card.images[0]"
-            :size="size"
-          />
+          <CardTile :key="card.id" density="high" :image="card.images[0]" :size="size" />
         </template>
       </draggable>
-      <div v-if="endLabel" class="ordering-label ordering-label-end">
-        → {{ endLabel }}
-      </div>
+      <div v-if="endLabel" class="ordering-label ordering-label-end">→ {{ endLabel }}</div>
     </div>
   </Tool>
 </template>

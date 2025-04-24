@@ -29,9 +29,7 @@ const allSelected = computed(
 );
 const handleSelectAll = () => (selectedDifficulties.value = allDifficulties);
 const availablePatterns = computed(() =>
-  selectedDifficulties.value
-    .map((key) => patterns[key as keyof typeof patterns])
-    .flat(),
+  selectedDifficulties.value.map((key) => patterns[key as keyof typeof patterns]).flat(),
 );
 
 const hintLength = ref(6);
@@ -40,13 +38,8 @@ const totalLength = computed(() => hintLength.value + answerLength.value);
 
 const wrap = ref(false);
 const sizer = useTemplateRef("sizer");
-const { cols, handleResize, size } = useResize(
-  sizer,
-  totalLength,
-  (rect: DOMRect, num: number) =>
-    wrap.value
-      ? calcRows(answerLength.value, totalLength.value)
-      : calcOneRow(rect, num),
+const { cols, handleResize, size } = useResize(sizer, totalLength, (rect: DOMRect, num: number) =>
+  wrap.value ? calcRows(answerLength.value, totalLength.value) : calcOneRow(rect, num),
 );
 watch(wrap, handleResize);
 const indices = computed(() => chunk(range(totalLength.value), cols.value));
@@ -74,8 +67,7 @@ watch(availablePatterns, () => {
 });
 
 const handleAnswered = (value?: number) => {
-  if (typeof value === "number" && value >= hintLength.value)
-    answered.value.add(value);
+  if (typeof value === "number" && value >= hintLength.value) answered.value.add(value);
 };
 
 const { onKey } = useKeys();
@@ -86,8 +78,7 @@ onMounted(() => {
 });
 
 const imageFor = (i: number) =>
-  cards.value[parseInt(pattern.value[i % pattern.value.length])]?.images[0] ??
-  question;
+  cards.value[parseInt(pattern.value[i % pattern.value.length])]?.images[0] ?? question;
 </script>
 
 <template>

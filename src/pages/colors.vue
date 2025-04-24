@@ -10,21 +10,12 @@ const size = 7;
 
 const colorOptions = computed(() => sortBy(Object.values(colorMap), ["label"]));
 const selectedColors = ref(colorOptions.value.map((c) => c.key));
-const allSelected = computed(
-  () => selectedColors.value.length === colorOptions.value.length,
-);
+const allSelected = computed(() => selectedColors.value.length === colorOptions.value.length);
 
 const handleSelectAll = () =>
-  (selectedColors.value = allSelected.value
-    ? []
-    : colorOptions.value.map((c) => c.key));
+  (selectedColors.value = allSelected.value ? [] : colorOptions.value.map((c) => c.key));
 
-const {
-  countdownSteps,
-  countdownStepsElapsed,
-  countdownRunning,
-  startCountdown,
-} = useCountdown();
+const { countdownSteps, countdownStepsElapsed, countdownRunning, startCountdown } = useCountdown();
 
 const colorList = computed(() =>
   getColorList(size * (size + countdownSteps), selectedColors.value),

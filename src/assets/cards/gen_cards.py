@@ -21,7 +21,9 @@ def gen_card_imports(files):
         cog.outl(f'import {camel_case(f)}Card from "./{f}.png";')
 
 
-def gen_card_specs(files, tags):
+def gen_card_specs(files, tags, filter=None):
+    if filter:
+        files = [f for f in files if filter(f)]
     groups = {}
     for f in files:
         gId = re.sub(r"\d+$", "", f)

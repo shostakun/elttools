@@ -9,9 +9,6 @@ const selectedFont = defineModel<string>({
 <template>
   <v-select v-model="selectedFont" :items="fontOptions" label="Font"
     ><template #item="{ props: itemProps, item }">
-      <v-list-item
-        v-bind="itemProps"
-        :style="{ fontFamily: item.value }"
-      ></v-list-item> </template
+      <v-list-item v-bind="itemProps" :style="{ fontFamily: item.value }"></v-list-item> </template
   ></v-select>
 </template>

@@ -17,13 +17,9 @@ const boardSizeModel = ref(4);
 const autoRefresh = ref(true);
 const findSame = ref(true);
 const guess = ref<Card | null>(null);
-const maxBoardSize = computed(() =>
-  Math.floor(Math.sqrt((cardsInSets.value.length + 1) / 2)),
-);
+const maxBoardSize = computed(() => Math.floor(Math.sqrt((cardsInSets.value.length + 1) / 2)));
 const minBoardSize = 2;
-const boardSize = computed(() =>
-  clamp(boardSizeModel.value, minBoardSize, maxBoardSize.value),
-);
+const boardSize = computed(() => clamp(boardSizeModel.value, minBoardSize, maxBoardSize.value));
 const enoughCards = computed(() => maxBoardSize.value >= minBoardSize);
 
 const handleMakeBoard = () => {
@@ -34,15 +30,10 @@ const handleMakeBoard = () => {
   guess.value = null;
   answers.value = [samples.pop() as Card];
   if (!findSame.value) answers.value.push(samples.pop() as Card);
-  boardA.value = shuffle([
-    answers.value[0],
-    ...samples.slice(0, boardCount - 1),
-  ]);
+  boardA.value = shuffle([answers.value[0], ...samples.slice(0, boardCount - 1)]);
   boardB.value = shuffle([
     answers.value[answers.value.length - 1],
-    ...samples.slice(
-      ...(findSame.value ? [boardCount - 1] : [0, boardCount - 1]),
-    ),
+    ...samples.slice(...(findSame.value ? [boardCount - 1] : [0, boardCount - 1])),
   ]);
 };
 
@@ -52,12 +43,7 @@ const { onKey } = useKeys();
 onKey("Enter", handleMakeBoard);
 onKey("r", () => (autoRefresh.value = !autoRefresh.value));
 
-const {
-  countdownRunning,
-  countdownStepsRemaining,
-  onCountdownEnd,
-  startCountdown,
-} = useCountdown({
+const { countdownRunning, countdownStepsRemaining, onCountdownEnd, startCountdown } = useCountdown({
   duration: 3,
   interval: 1,
 });
@@ -92,24 +78,16 @@ onMounted(() => {
         :max="maxBoardSize"
         :min="minBoardSize"
       />
-      <v-tooltip
-        text="Generate a new board after answering? Use the `r` key to toggle."
-      >
+      <v-tooltip text="Generate a new board after answering? Use the `r` key to toggle.">
         <template #activator="{ props }">
-          <v-switch
-            v-model="autoRefresh"
-            v-bind="props"
-            label="Automatically refresh"
-          />
+          <v-switch v-model="autoRefresh" v-bind="props" label="Automatically refresh" />
         </template>
       </v-tooltip>
       <v-switch v-model="findSame" label="Find same" />
     </template>
 
     <div>
-      <h1 v-if="countdownRunning">
-        New board in {{ countdownStepsRemaining }}...
-      </h1>
+      <h1 v-if="countdownRunning">New board in {{ countdownStepsRemaining }}...</h1>
       <h1 v-else>Find the {{ findSame ? "same" : "different" }} picture!</h1>
       <h2 v-if="!enoughCards">Not enough cards, please choose more...</h2>
     </div>
