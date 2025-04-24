@@ -66,5 +66,5 @@ export const images = makeCards(imageMap);
 export const imageList = Object.values(images);
 
 export const sets: Record<string, CardSet> = {
-  ...makeSet(imageList, "action verbs 1", ["action", "set 1", "verb"]),
+  ...makeSet(imageList, "actionVerbs", ["action", "set 1", "verb"]),
 };

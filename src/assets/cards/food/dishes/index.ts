@@ -28,5 +28,5 @@ export const images = makeCards(imageMap);
 export const imageList = Object.values(images);
 
 export const sets: Record<string, CardSet> = {
-  ...makeSet(imageList, "food", ["dish", "food", "one"]),
+  ...makeSet(imageList, "food", ["dish", "food"]),
 };
