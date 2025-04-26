@@ -3,7 +3,6 @@ import { getGlobalFont } from "@/types/font";
 import tools from "@/types/tools";
 import { ANY_KEY, useKeys } from "@/utils/keys";
 import { calcTextWidth } from "@/utils/text";
-import { mdiRefresh } from "@mdi/js";
 import classNames from "classnames";
 import { chunk, shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
@@ -171,7 +170,7 @@ onMounted(() => {
 <template>
   <Tool container-class="tic-tac-toe-container" :tool="tools.ticTacToe">
     <template #toolbar>
-      <v-btn :icon="mdiRefresh" @click="handleRefresh" />
+      <NewButton text="Start a new game" @click="handleRefresh" />
     </template>
 
     <template #tool-menu>

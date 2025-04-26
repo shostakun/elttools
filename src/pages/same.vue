@@ -4,7 +4,6 @@ import tools from "@/types/tools";
 import { useCardSets } from "@/utils/cards";
 import { useCountdown } from "@/utils/countdown";
 import { useKeys } from "@/utils/keys";
-import { mdiRefresh } from "@mdi/js";
 import { clamp, shuffle } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
@@ -67,7 +66,7 @@ onMounted(() => {
 <template>
   <Tool container-class="same-container" :tool="tools.same">
     <template #toolbar>
-      <v-btn :icon="mdiRefresh" @click="handleMakeBoard" />
+      <NewButton @click="handleMakeBoard" />
     </template>
 
     <template #tool-menu>

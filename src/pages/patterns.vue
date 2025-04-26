@@ -4,7 +4,6 @@ import tools from "@/types/tools";
 import { useCardSet } from "@/utils/cards";
 import { useKeys } from "@/utils/keys";
 import { calcOneRow, calcRows, useResize } from "@/utils/resize";
-import { mdiRefresh } from "@mdi/js";
 import { chunk, range, sample, startCase } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 
@@ -84,7 +83,7 @@ const imageFor = (i: number) =>
 <template>
   <Tool container-class="pattern-container" :tool="tools.patterns">
     <template #toolbar>
-      <v-btn :icon="mdiRefresh" @click="handleChoosePattern" />
+      <NewButton text="Choose a new pattern" @click="handleChoosePattern" />
     </template>
 
     <template #tool-menu>

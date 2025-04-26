@@ -7,7 +7,7 @@ import { ANY_KEY, keyRelations, useKeys } from "@/utils/keys";
 import { randomStrings } from "@/utils/random";
 import { useSounds } from "@/utils/sound";
 import { randomWords } from "@/utils/words";
-import { mdiChevronLeft, mdiChevronRight, mdiRefresh } from "@mdi/js";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 import classNames from "classnames";
 // @ts-expect-error No type declaration.
 import convertKeyEvent from "keysight";
@@ -247,17 +247,27 @@ onKey(ANY_KEY, (event) => {
   <Tool container-class="typing-container" :tool="tools.typing">
     <template #toolbar>
       <v-btn-group rounded="pill">
-        <v-btn
-          :disabled="selectedLevel.index < 1"
-          :icon="mdiChevronLeft"
-          @click="handlePreviousLevel"
-        />
-        <v-btn :icon="mdiRefresh" @click="makeTarget" />
-        <v-btn
-          :disabled="selectedLevel.index >= levels.length - 1"
-          :icon="mdiChevronRight"
-          @click="handleNextLevel"
-        />
+        <v-tooltip location="bottom start" text="Go to the previous level">
+          <template #activator="{ props: activatorProps }">
+            <v-btn
+              v-bind="activatorProps"
+              :disabled="selectedLevel.index < 1"
+              :icon="mdiChevronLeft"
+              @click="handlePreviousLevel"
+            />
+          </template>
+        </v-tooltip>
+        <NewButton text="Make a new practice text" @click="makeTarget" />
+        <v-tooltip location="bottom start" text="Go to the next level">
+          <template #activator="{ props: activatorProps }">
+            <v-btn
+              v-bind="activatorProps"
+              :disabled="selectedLevel.index >= levels.length - 1"
+              :icon="mdiChevronRight"
+              @click="handleNextLevel"
+            />
+          </template>
+        </v-tooltip>
       </v-btn-group>
     </template>
 

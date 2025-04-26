@@ -13,6 +13,7 @@ declare module 'vue' {
     FontSelector: typeof import('./src/components/FontSelector.vue')['default']
     GlobalSettings: typeof import('./src/components/GlobalSettings.vue')['default']
     Markdown: typeof import('./src/components/Markdown.vue')['default']
+    NewButton: typeof import('./src/components/NewButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SameImageCell: typeof import('./src/components/SameImageCell.vue')['default']

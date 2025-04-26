@@ -7,7 +7,6 @@ import tools from "@/types/tools";
 import { useCardSet } from "@/utils/cards";
 import { useKeys } from "@/utils/keys";
 import { calcGridLayout, calcRows, useResize } from "@/utils/resize";
-import { mdiRefresh } from "@mdi/js";
 import { chunk, sample } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 
@@ -85,7 +84,7 @@ onMounted(handleRoll);
 <template>
   <Tool :tool="tools.cards">
     <template #toolbar>
-      <v-btn :icon="mdiRefresh" @click="handleRoll" />
+      <NewButton @click="handleRoll" />
     </template>
 
     <template #tool-menu>

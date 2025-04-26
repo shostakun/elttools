@@ -3,7 +3,6 @@ import tools from "@/types/tools";
 import { useCardSets } from "@/utils/cards";
 import { useKeys } from "@/utils/keys";
 import { useResize } from "@/utils/resize";
-import { mdiRefresh } from "@mdi/js";
 import { chunk, shuffle } from "lodash";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 
@@ -43,7 +42,7 @@ onMounted(handleRoll);
 <template>
   <Tool :tool="tools.dice">
     <template #toolbar>
-      <v-btn :icon="mdiRefresh" @click="handleRoll" />
+      <NewButton text="Roll again" @click="handleRoll" />
     </template>
 
     <template #tool-menu>

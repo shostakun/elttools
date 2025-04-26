@@ -4,7 +4,6 @@ import tools from "@/types/tools";
 import { useCardSet } from "@/utils/cards";
 import { useKeys } from "@/utils/keys";
 import { calcOneRow, useResize } from "@/utils/resize";
-import { mdiRefresh } from "@mdi/js";
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 import draggable from "vuedraggable";
 
@@ -33,7 +32,7 @@ watch(cards, () => (list.value = cards.value.map((card, i) => ({ card, id: i }))
 <template>
   <Tool :tool="tools.ordering">
     <template #toolbar>
-      <v-btn :icon="mdiRefresh" @click="handleShuffle" />
+      <NewButton text="Shuffle the cards" @click="handleShuffle" />
     </template>
 
     <template #tool-menu>
