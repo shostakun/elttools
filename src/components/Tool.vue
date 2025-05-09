@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { type Tool } from "@/types";
-import { mdiHome } from "@mdi/js";
-import { useSlots } from "vue";
 import classNames from "classnames";
 
 const { containerClass, tool } = defineProps<{
   containerClass?: string;
   tool: Tool;
 }>();
-
-const slots = useSlots();
 </script>
 
 <template>
@@ -21,11 +17,9 @@ const slots = useSlots();
     <slot name="tool-menu" />
   </ToolMenu>
 
-  <v-toolbar collapse class="tool-toolbar">
-    <v-btn :icon="mdiHome" to="/" />
-    <v-divider v-if="slots.toolbar" inset vertical />
+  <ToolToolbar>
     <slot name="toolbar" />
-  </v-toolbar>
+  </ToolToolbar>
 </template>
 
 <style lang="scss">

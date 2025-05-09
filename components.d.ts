@@ -7,11 +7,13 @@ export {};
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AuthProvider: typeof import('./src/components/AuthProvider.vue')['default']
     CardProvider: typeof import('./src/components/CardProvider.vue')['default']
     CardSetSelector: typeof import('./src/components/CardSetSelector.vue')['default']
     CardTile: typeof import('./src/components/CardTile.vue')['default']
     FontSelector: typeof import('./src/components/FontSelector.vue')['default']
     GlobalSettings: typeof import('./src/components/GlobalSettings.vue')['default']
+    Login: typeof import('./src/components/Login.vue')['default']
     Markdown: typeof import('./src/components/Markdown.vue')['default']
     NewButton: typeof import('./src/components/NewButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -25,5 +27,6 @@ declare module 'vue' {
     ToolListCard: typeof import('./src/components/ToolListCard.vue')['default']
     ToolMenu: typeof import('./src/components/ToolMenu.vue')['default']
     ToolMenuControlsPanel: typeof import('./src/components/ToolMenuControlsPanel.vue')['default']
+    ToolToolbar: typeof import('./src/components/ToolToolbar.vue')['default']
   }
 }

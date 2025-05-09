@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiChevronDoubleRight, mdiCogs } from "@mdi/js";
+import { mdiChevronDoubleRight, mdiCogs, mdiSecurity } from "@mdi/js";
 import { ref, useSlots } from "vue";
 
 const { globalSettings } = defineProps<{ globalSettings?: boolean }>();
@@ -31,9 +31,9 @@ const openDrawer = () => (drawer.value = true);
       </v-list-item>
     </v-list>
 
-    <v-divider v-if="slots.default" />
-
     <div class="drawer-content">
+      <v-divider v-if="slots.default || slots.panels || globalSettings" />
+
       <!-- Relevant settings for the context -->
       <slot />
 
@@ -47,6 +47,11 @@ const openDrawer = () => (drawer.value = true);
         <SettingsMenuPanel :icon="mdiCogs" label="Global Settings">
           <GlobalSettings />
         </SettingsMenuPanel>
+      </v-expansion-panels>
+
+      <!-- Admin -->
+      <v-expansion-panels class="drawer-panels" variant="accordion">
+        <SettingsMenuPanel :icon="mdiSecurity" label="Admin"><Login /></SettingsMenuPanel>
       </v-expansion-panels>
     </div>
   </v-navigation-drawer>

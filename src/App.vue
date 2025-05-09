@@ -3,7 +3,9 @@
     <v-main>
       <ThemeProvider>
         <CardProvider>
-          <router-view />
+          <AuthProvider>
+            <router-view />
+          </AuthProvider>
         </CardProvider>
       </ThemeProvider>
     </v-main>

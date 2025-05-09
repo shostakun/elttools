@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { tools } from "@/types";
+import { useAuth } from '@/utils/user';
+
+const {loggedIn} = useAuth();
 </script>
 
 <template>
@@ -9,6 +12,7 @@ import { tools } from "@/types";
 
   <div class="container">
     <h1>ELT Tools</h1>
+    <p v-if="loggedIn">🧙 <RouterLink to="/admin">Admin page</RouterLink></p>
     <h2>for the classroom or online</h2>
     <p>
       These are tools I've built for my own use over the years. Many/most of them have been designed
